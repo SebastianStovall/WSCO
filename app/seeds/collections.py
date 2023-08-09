@@ -4,15 +4,15 @@ from sqlalchemy.sql import text
 
 def seed_collections():
     collectionsArr = [
-    {"userId": 1, "postId": 12},
-    {"userId": 1, "postId": 22},
-    {"userId": 1, "postId": 23},
-    {"userId": 2, "postId": 2},
-    {"userId": 2, "postId": 4},
-    {"userId": 2, "postId": 24},
-    {"userId": 1, "postId": 3},
-    {"userId": 2, "postId": 13},
-    {"userId": 3, "postId": 14},
+        {"userId": 1, "postId": 12},
+        {"userId": 1, "postId": 22},
+        {"userId": 1, "postId": 23},
+        {"userId": 2, "postId": 2},
+        {"userId": 2, "postId": 4},
+        {"userId": 2, "postId": 24},
+        {"userId": 1, "postId": 3},
+        {"userId": 2, "postId": 13},
+        {"userId": 3, "postId": 14}
     ]
 
     with db.engine.connect() as connection:
