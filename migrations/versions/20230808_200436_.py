@@ -1,22 +1,20 @@
 """empty message
 
-Revision ID: ca616b1aa17a
+Revision ID: a0c8f788c591
 Revises:
-Create Date: 2023-08-08 19:40:39.738835
+Create Date: 2023-08-08 20:04:36.211510
 
 """
 from alembic import op
 import sqlalchemy as sa
-
 
 import os
 
 environment = os.getenv("FLASK_ENV")
 SCHEMA = os.environ.get("SCHEMA")
 
-
 # revision identifiers, used by Alembic.
-revision = 'ca616b1aa17a'
+revision = 'a0c8f788c591'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,7 +33,7 @@ def upgrade():
     )
 
     if environment == "production":
-            op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
 
     op.create_table('journals',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -47,7 +45,7 @@ def upgrade():
     )
 
     if environment == "production":
-            op.execute(f"ALTER TABLE journals SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE journals SET SCHEMA {SCHEMA};")
 
     op.create_table('posts',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -59,7 +57,7 @@ def upgrade():
     )
 
     if environment == "production":
-            op.execute(f"ALTER TABLE posts SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE posts SET SCHEMA {SCHEMA};")
 
     op.create_table('collections',
     sa.Column('userId', sa.Integer(), nullable=False),
@@ -70,7 +68,7 @@ def upgrade():
     )
 
     if environment == "production":
-            op.execute(f"ALTER TABLE collections SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE collections SET SCHEMA {SCHEMA};")
 
     op.create_table('comments',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -83,7 +81,7 @@ def upgrade():
     )
 
     if environment == "production":
-            op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE comments SET SCHEMA {SCHEMA};")
 
     op.create_table('journalphotos',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -95,7 +93,7 @@ def upgrade():
     )
 
     if environment == "production":
-            op.execute(f"ALTER TABLE journalphotos SET SCHEMA {SCHEMA};")
+        op.execute(f"ALTER TABLE journalphotos SET SCHEMA {SCHEMA};")
 
     # ### end Alembic commands ###
 
