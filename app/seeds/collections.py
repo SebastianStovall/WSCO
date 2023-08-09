@@ -1,5 +1,4 @@
-from app.models import db, Post, User, environment, SCHEMA
-from app.models.collections import collections_association
+from app.models import db, Post, User, environment, SCHEMA, collections_association
 from sqlalchemy.sql import text
 
 def seed_collections():
@@ -15,10 +14,11 @@ def seed_collections():
         {"userId": 3, "postId": 14}
     ]
 
-    with db.engine.connect() as connection:
+    with db.session.begin():
         for collection in collectionsArr:
             each_collection = collections_association.insert().values(**collection)
-            connection.execute(each_collection)
+            db.session.execute(each_collection)
+
     return collectionsArr
 
 
