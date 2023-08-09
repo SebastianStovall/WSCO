@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: bb23198aadc0
+Revision ID: d4fbb23aee6d
 Revises:
-Create Date: 2023-08-09 01:40:58.125370
+Create Date: 2023-08-09 10:05:09.653096
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'bb23198aadc0'
+revision = 'd4fbb23aee6d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -94,6 +94,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE journalphotos SET SCHEMA {SCHEMA};")
+
     # ### end Alembic commands ###
 
 
