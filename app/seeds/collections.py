@@ -1,4 +1,5 @@
-from app.models import db, Post, User, collections, environment, SCHEMA
+from app.models import db, Post, User, environment, SCHEMA
+from app.models.collections import collections_association
 from sqlalchemy.sql import text
 
 def seed_collections():
@@ -16,7 +17,7 @@ def seed_collections():
 
     with db.engine.connect() as connection:
         for collection in collectionsArr:
-            each_collection = collections.insert().values(**collection)
+            each_collection = collections_association.insert().values(**collection)
             connection.execute(each_collection)
         return collectionsArr
 
@@ -24,9 +25,9 @@ def seed_collections():
 def undo_collections():
     if environment == "production":
         db.session.execute(
-            f"TRUNCATE table {SCHEMA}.collections RESTART IDENTITY CASCADE;"
+            f"TRUNCATE table {SCHEMA}.collections_association RESTART IDENTITY CASCADE;"
         )
     else:
-        db.session.execute(text("DELETE FROM collections"))
+        db.session.execute(text("DELETE FROM collections_association"))
 
     db.session.commit()

@@ -1,5 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
-from .collections import collections
+from .collections import collections_association
 
 class Post(db.Model):
     __tablename__ = "posts"
@@ -15,7 +15,7 @@ class Post(db.Model):
     user_posts = db.relationship("User", back_populates="posts")
 
     # Many-To-Many association with 'collections' Table Constructor (linking User and Post tables)
-    post_collections = db.relationship('User', secondary=collections, back_populates="user_collections")
+    post_collections = db.relationship('User', secondary=collections_association, back_populates="user_collections")
 
     def to_dict(self):
         return {
