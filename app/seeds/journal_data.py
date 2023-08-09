@@ -6,7 +6,7 @@ journals = [
     },
     {
         "title": "Smile More",
-        "description": "",
+        "description": "life's good",
         "userId": 2
     },
     {

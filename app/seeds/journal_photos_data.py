@@ -1,4 +1,4 @@
-journalphotos = [
+journal_photos = [
     {
         "journalId": 1,
         "photoUrl": "https://im.vsco.co/aws-us-west-2/b5c26e/3860648/64bc6cdfc5b56c0e3a8927a6/vsco_072323.jpg?w=922&dpr=2",
