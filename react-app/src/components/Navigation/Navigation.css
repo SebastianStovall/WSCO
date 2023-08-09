@@ -1,7 +1,27 @@
 .profile-dropdown {
-  position: absolute;
+  /* position: absolute; */
+  width: 10vw;
+  background-color: black;
+  height: 100vw;
 }
 
 .hidden {
   display: none;
+}
+
+#navbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.side-bar-scroll {
+  background-color: black;
+  position: absolute;
+  right: 0px;
+  border: 1px solid red;
+}
+
+.fa-user-circle {
+  position: static;
+  left: -20px;
 }
