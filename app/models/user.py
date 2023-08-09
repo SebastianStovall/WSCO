@@ -39,5 +39,6 @@ class User(db.Model, UserMixin):
             'email': self.email,
             'posts': [post.to_dict() for post in self.posts],
             'comments': [comment.to_dict() for comment in self.comments],
-            'journals': [journal.to_dict() for journal in self.journals]
+            'journals': [journal.to_dict() for journal in self.journals],
+            'collection': [collection.to_dict() for collection in self.user_collections]
         }

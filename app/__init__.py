@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User
+from .models import db, User, Post, Comment, Journal, JournalPhoto
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .seeds import seed_commands
@@ -72,6 +72,30 @@ def api_help():
                     for rule in app.url_map.iter_rules() if rule.endpoint != 'static' }
     return route_list
 
+# @app.route("/1")
+# def test_route():
+#     demo_user = User.query.get(1)
+#     return demo_user.to_dict()
+
+# @app.route("/2")
+# def test_route2():
+#     comment_10 = Comment.query.get(10)
+#     return comment_10.to_dict()
+
+# @app.route("/3")
+# def test_route3():
+#     post_15 = Post.query.get(15)
+#     return post_15.to_dict()
+
+# @app.route("/4")
+# def test_route4():
+#     journal_2 = Journal.query.get(2)
+#     return journal_2.to_dict()
+
+# @app.route("/5")
+# def test_route5():
+#     journal_photo_8 = JournalPhoto.query.get(8)
+#     return journal_photo_8.to_dict()
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
