@@ -33,7 +33,7 @@ function App() {
             <Account />
           </Route>
           <Route exact path="*">
-            <h2>"An error occurred."</h2>
+            <h2>"An error occurred"</h2>
           </Route>
         </Switch>
       )}

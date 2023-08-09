@@ -3,7 +3,7 @@ const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 
 const UPDATE_USER = "session/UPDATE_USER";
-const UPDATE_USER_PASSWORD = "session/UPDATE_USER_PASSWORD";
+// const UPDATE_USER_PASSWORD = "session/UPDATE_USER_PASSWORD";
 const DELETE_USER = "session/DELETE_USER";
 
 //ACTION CREATORS

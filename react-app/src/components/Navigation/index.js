@@ -11,6 +11,7 @@ function Navigation({ isLoaded }){
 		<ul id='navbar'>
 			<div>
 				<NavLink exact to="/">Home</NavLink>
+				{sessionUser ? <button>PROFILE BUTTON HERE</button> : <NavLink exact to="/login">Sign In</NavLink>}
 			</div>
 			{isLoaded && (
 				<div className='side-bar-scroll'>

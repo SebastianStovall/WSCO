@@ -34,8 +34,7 @@ def manage_account():
         user.email = form.data["email"]
         user.first_name = form.data["first_name"]
         user.last_name = form.data["last_name"]
-
-        user.password = form.data["password"]
+        user.username = form.data["username"]
 
         db.session.commit()
         return user.to_dict()
