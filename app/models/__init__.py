@@ -2,7 +2,7 @@ from .db import db
 from .user import User
 from .db import environment, SCHEMA
 
-from .collections import collections
+from .collections import collections_association
 
 from .comments import Comment
 from .journalphotos import JournalPhoto
