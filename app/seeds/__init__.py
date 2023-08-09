@@ -5,7 +5,7 @@ from .posts import seed_posts, undo_posts
 from .comments import seed_comments, undo_comments
 from .journals import seed_journals, undo_journals
 from .journalphotos import seed_journal_photos, undo_journal_photos
-from .collections import seed_collections, undo_collections
+# from .collections import seed_collections, undo_collections
 
 from app.models.db import db, environment, SCHEMA
 
