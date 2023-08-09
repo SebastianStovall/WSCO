@@ -12,6 +12,17 @@ def user_exists(form, field):
         raise ValidationError('Email address is already in use.')
 
 
+def email_ending(form, field):
+    email = field.data
+    if not email.lower().endswith('.com'):
+        raise ValidationError('Email must end with .com')
+
+def email_contains_at_symbol(form, field):
+    email = field.data
+    if '@' not in email:
+        raise ValidationError('Email must contain the @ symbol')
+
+
 def username_exists(form, field):
     # Checking if username is already in use
     username = field.data
@@ -19,9 +30,18 @@ def username_exists(form, field):
     if user:
         raise ValidationError('Username is already in use.')
 
+def password_length(form, field):
+    password = field.data
+    if len(password) < 8:
+        raise ValidationError('Password must be at least 8 characters.')
+
+def username_length(form, field):
+    username = field.data
+    if len(username) < 3 or len(username) > 40:
+        raise ValidationError('Username must be between 3 and 40 characters')
+
 
 class SignUpForm(FlaskForm):
-    username = StringField(
-        'username', validators=[DataRequired(), username_exists])
-    email = StringField('email', validators=[DataRequired(), user_exists])
-    password = StringField('password', validators=[DataRequired()])
+    username = StringField('username', validators=[DataRequired(), username_exists, username_length])
+    email = StringField('email', validators=[DataRequired(), user_exists, email_ending, email_contains_at_symbol])
+    password = StringField('password', validators=[DataRequired(), password_length])
