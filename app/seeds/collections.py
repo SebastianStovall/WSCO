@@ -14,12 +14,12 @@ def seed_collections():
         {"userId": 3, "postId": 14}
     ]
 
-    with db.session.begin():
+    with db.engine.connect() as connection:
         for collection in collectionsArr:
             each_collection = collections_association.insert().values(**collection)
             db.session.execute(each_collection)
 
-    return collectionsArr
+        return collectionsArr
 
 
 def undo_collections():
