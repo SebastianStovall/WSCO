@@ -24,14 +24,12 @@ def seed():
         # Make sure to add all your other model's undo functions below
         undo_journal_photos()
         undo_comments()
-        # undo_collections()
         undo_posts()
         undo_journals()
         undo_users()
     seed_users()
     seed_journals()
     seed_posts()
-    # seed_collections()
     seed_comments()
     seed_journal_photos()
     # Add other seed functions here
@@ -42,7 +40,6 @@ def seed():
 def undo():
     undo_journal_photos()
     undo_comments()
-    # undo_collections()
     undo_posts()
     undo_journals()
     undo_users()
