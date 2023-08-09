@@ -10,7 +10,7 @@ function ProfileButton({ user }) {
 
   const history = useHistory()
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 

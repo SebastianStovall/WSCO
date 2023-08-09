@@ -1,5 +1,30 @@
+#account-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 #account-nav-buttons-container {
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+
+.profile-name-container {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-name-container > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name-container > div > input {
+    width: 100%;
+    height: 30px;
+    border-spacing: 0;
+    cursor: default;
+    overflow: hidden;
 }

@@ -17,6 +17,10 @@ body {
     word-break: break-word;
 }
 
+.center-p {
+    text-align: center;
+}
+
 #root {
     min-height: 100vh;
 }
