@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
     journals = db.relationship("Journal", back_populates="user_journals", cascade="all, delete-orphan")
 
     # Many-To-Many association with 'collections' Table Constructor (linking User and Post tables)
-    user_collections = db.relationship('Post', secondary=collections_association, back_populates="post_collections")
+    user_collections = db.relationship('Post', secondary='collections_association', back_populates="post_collections")
 
     @property
     def password(self):
