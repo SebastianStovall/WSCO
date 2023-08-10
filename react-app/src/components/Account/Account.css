@@ -11,20 +11,90 @@
     gap: 20px;
 }
 
-.profile-name-container {
+.profle-form-section-container {
     display: flex;
-    gap: 10px;
+    gap: 25px;
+    margin-bottom: 10px;
 }
 
-.profile-name-container > div {
+.profle-form-section-container > div {
     display: flex;
     flex-direction: column;
 }
 
-.profile-name-container > div > input {
+.profle-form-section-container > div > label {
+    color: #888888;
+    font-size: 9px;
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+
+.profle-form-section-container > div > input {
     width: 100%;
     height: 30px;
     border-spacing: 0;
     cursor: default;
     overflow: hidden;
+}
+
+.account-details-form-button {
+    width: 30%;
+    height: 30px;
+    border-radius: 0px;
+    font-size: 9px;
+    color: #888888;
+    background: transparent;
+    border: 1px solid;
+}
+
+.account-details-form-button:hover {
+    width: 30%;
+    height: 30px;
+    border-radius: 0px;
+    font-size: 9px;
+    color: #AE995A;
+    background: transparent;
+    border: 1px solid #AE995A;
+}
+
+
+#password-edit-form {
+    display: flex;
+    width: 379px;
+    margin-top: 50px;
+}
+
+.password {
+    flex-direction: column;
+    flex-basis: 50%;
+    margin-right: 15px;
+    /* border: 2px solid red; */
+}
+
+.password > div > input {
+    width: 96%;
+}
+
+#profile-img-container {
+    width: 100%;
+    border: 1px solid #888888;
+    flex-basis: 50%;
+}
+
+#profile-img-container > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: fill;
+}
+
+.password-button {
+    margin-top: 10px;
+    width: 62%;
+}
+
+.password-button:hover {
+    margin-top: 10px;
+    width: 62%;
 }
