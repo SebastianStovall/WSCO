@@ -49,12 +49,8 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={() => history.push("/account")}>Account</button>
-              {/* <button onClick={handleLogout}>Log Out</button> */}
-            </li>
+            <button onClick={() => history.push("/account")}>Account</button>
+            {/* <button onClick={handleLogout}>Log Out</button> */}
           </>
         ) : (
           <>

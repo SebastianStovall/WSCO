@@ -1,0 +1,37 @@
+#search-component-main-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3vw;
+}
+
+#search-component-main-container > div {
+    /* border: 1px solid red; */
+    width: 25%;
+    padding: 5px 5px;
+}
+
+#search-container {
+    width: 80%;
+    margin-bottom: 5px;
+}
+
+#search-container > input {
+    border: 1px solid white;
+    width: 100%;
+}
+
+#search-container > input:focus {
+    border-color: transparent;
+    outline: none;
+}
+
+#search-container > input::placeholder {
+    font-size: 18px;
+}
+
+
+#search-options-container {
+    display: flex;
+    border-top: 1px solid rgba(128, 128, 128, 0.5);
+    gap: 5px;
+}

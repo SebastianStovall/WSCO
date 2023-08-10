@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import Account from "./components/Account";
 import HomePage from "./components/HomePage";
+import Search from "./components/Search";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route exact path="/account">
             <Account />
+          </Route>
+          <Route exact path="/search">
+            <Search />
           </Route>
           <Route exact path="*">
             <h2>"An error occurred"</h2>
