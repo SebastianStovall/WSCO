@@ -1,6 +1,6 @@
-from flask import Blueprint, jsonify
-from flask_login import login_required
-from app.models import User
+from flask import Blueprint, jsonify, request
+from flask_login import login_required, current_user
+from app.models import User, db
 from app.forms import ManageForm, ManageFormPassword
 
 user_routes = Blueprint('users', __name__)
@@ -32,9 +32,11 @@ def manage_account():
     if form.validate_on_submit():
         # YOU NEED TO USE DOT NOTATION, OTHERWISE YOU GET A TYPE ERROR: "USER" OBJECT NOT SUBSCRIPTABLE
         user.email = form.data["email"]
-        user.first_name = form.data["first_name"]
-        user.last_name = form.data["last_name"]
+        user.firstName = form.data["firstName"]
+        user.lastName = form.data["lastName"]
         user.username = form.data["username"]
+        user.profileBio = form.data["profileBio"]
+        user.profileImgUrl = form.data["profileImgUrl"]
 
         db.session.commit()
         return user.to_dict()
