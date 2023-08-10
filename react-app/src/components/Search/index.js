@@ -30,6 +30,8 @@ function Search() {
 
     const searchQueryFunc = () => {
 
+        // so if not search found, stop the loop for additional keystrokes
+
         const query = searchQueryString
         if(!query) return null
 
@@ -49,7 +51,7 @@ function Search() {
 
     return (
         <div id="search-component-main-container">
-            <div>
+            <div id="search-bar-section">
                 <div id="search-container">
                 <input id="search_bar" type="text" placeholder="Search" onChange={(e) => setSearchQueryString(e.target.value)}/>
                 </div>

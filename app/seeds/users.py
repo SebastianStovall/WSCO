@@ -21,7 +21,17 @@ def seed_users():
     david = User( username="DavidLee", email="david@gmail.com", password="password" )
     james = User( username="JamesLang", email="james@gmail.com", password="password" )
     andrew = User( username="AndrewForest", email="andrew@gmail.com", password="password" )
-    blake = User( username="Blake", email="blake@gmail.com", password="password" )
+    blake = User( username="BlakeGord", email="blakegord@gmail.com", password="password" )
+
+    damian = User(username="DamianRoss", firstName="damian", lastName="ross", email="damianross@gmail.com", password="password")
+    daniel = User(username="DanielSmith", firstName="Daniel", lastName="Smith", email="danielsmith@gmail.com", password="password")
+    diana = User(username="DianaBrown", firstName="Diana", lastName="Brown", email="dianabrown@gmail.com", password="password")
+    derek = User(username="DerekWilliams", firstName="Derek", lastName="Williams", email="derekwilliams@gmail.com", password="password")
+    deborah = User(username="DeborahLee", firstName="Deborah", lastName="Lee", email="deborahlee@gmail.com", password="password")
+    dennis = User(username="DennisMartin", firstName="Dennis", lastName="Martin", email="dennismartin@gmail.com", password="password")
+    donald = User(username="DonaldWilson", firstName="Donald", lastName="Wilson", email="donaldwilson@gmail.com", password="password")
+    dorothy = User(username="DorothyClark", firstName="Dorothy", lastName="Clark", email="dorothyclark@gmail.com", password="password")
+    dylan = User(username="DylanAllen", firstName="Dylan", lastName="Allen", email="dylanallen@gmail.com", password="password")
 
     db.session.add(demo)
     db.session.add(clara)
@@ -33,6 +43,16 @@ def seed_users():
     db.session.add(james)
     db.session.add(andrew)
     db.session.add(blake)
+
+    db.session.add(damian)
+    db.session.add(daniel)
+    db.session.add(diana)
+    db.session.add(derek)
+    db.session.add(deborah)
+    db.session.add(dennis)
+    db.session.add(donald)
+    db.session.add(dorothy)
+    db.session.add(dylan)
 
     db.session.commit()
 
