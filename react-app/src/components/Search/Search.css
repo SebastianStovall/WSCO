@@ -1,6 +1,8 @@
 #search-component-main-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     margin-top: 3vw;
 }
 
@@ -34,4 +36,22 @@
     display: flex;
     border-top: 1px solid rgba(128, 128, 128, 0.5);
     gap: 5px;
+}
+
+.search-button-view {
+    background-color: transparent;
+    color: #737373;
+    padding: 0px;
+    margin: 0px;
+    font-size: 9.5px;
+    /* border: 1px solid red; */
+    border-radius: 0px;
+    text-align: left;
+    width: 40px;
+    height: 30px;
+}
+
+.search-button-view.active {
+    background-color: transparent;
+    color: black;
 }
