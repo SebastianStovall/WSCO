@@ -20,28 +20,52 @@ def username_exists(form, field):
     # Checking if username is already in use
     username = field.data
     user = User.query.filter(User.username == username).first()
-    if user:
+    if user and user.id != current_user.id:
         raise ValidationError('Username is already in use.')
-
 
 def username_length(form, field):
     username = field.data
     if len(username) < 3 or len(username) > 40:
         raise ValidationError('Username must be between 3 and 40 characters')
 
-
 def email_ending(form, field):
     email = field.data
     if not email.lower().endswith('.com'):
         raise ValidationError('Email must end with .com')
 
+def email_contains_at_symbol(form, field):
+    email = field.data
+    if '@' not in email:
+        raise ValidationError('Email must contain the @ symbol')
+
+def password_length(form, field):
+    password = field.data
+    if len(password) < 8:
+        raise ValidationError('Password must be at least 8 characters.')
+
+def firstName_length(form, field):
+    firstName = field.data
+    if len(firstName) > 30:
+        raise ValidationError("First name cannot exceed 30 characters")
+
+def lastName_length(form, field):
+    lastName = field.data
+    if len(lastName) > 30:
+        raise ValidationError("Last name cannot exceed 30 characters")
+
+def bio_length(form, field):
+    profileBio = field.data
+    if len(profileBio) > 100:
+        raise ValidationError("Bio cannot exceed 100 characters")
+
 
 class ManageForm(FlaskForm):
-    email = EmailField('email', validators=[DataRequired(), user_exists, email_ending])
-    first_name = StringField('first_name', validators=[DataRequired()])
-    last_name = StringField('last_name', validators=[DataRequired()])
+    email = EmailField('email', validators=[DataRequired(), user_exists, email_ending, email_contains_at_symbol])
+    firstName = StringField('firstName', validators=[DataRequired(), firstName_length])
+    lastName = StringField('lastName', validators=[DataRequired(), lastName_length])
     username = StringField('username', validators=[DataRequired(), username_exists, username_length])
-
+    profileImgUrl = StringField("profileImgUrl")
+    profileBio = StringField("profileBio", validators=[bio_length])
 
 class ManageFormPassword(FlaskForm):
-    password = StringField('password', validators=[DataRequired()])
+    password = StringField('password', validators=[DataRequired(), password_length])

@@ -3,7 +3,7 @@ const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 
 const UPDATE_USER = "session/UPDATE_USER";
-// const UPDATE_USER_PASSWORD = "session/UPDATE_USER_PASSWORD";
+const UPDATE_USER_PASSWORD = "session/UPDATE_USER_PASSWORD";
 const DELETE_USER = "session/DELETE_USER";
 
 //ACTION CREATORS
@@ -22,10 +22,10 @@ const editUser = (updatedInfo) => ({
 	payload: updatedInfo
 })
 
-// const editUserPassword = (updatedInfo) => ({
-// 	type: UPDATE_USER,
-// 	payload: updatedInfo
-// })
+const editUserPassword = (updatedInfo) => ({
+	type: UPDATE_USER_PASSWORD,
+	payload: updatedInfo
+})
 
 const deleteUser = () => ({
 	type: DELETE_USER,
@@ -133,21 +133,22 @@ export const updateUser = (formData) => async (dispatch) => {
 	}
 }
 
-// export const updateUserPassword = (formData) => async (dispatch) => {
-// 	const response = await fetch("/api/users/account/pasword", {
-// 		method: "PUT",
-// 		headers: {
-// 			"Content-Type": "application/json",
-// 		},
-// 		body: JSON.stringify(formData)
-// 	})
+export const updateUserPassword = (formData) => async (dispatch) => {
+	const response = await fetch("/api/users/account/password", {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(formData)
+	})
 
-// 	if(response.ok) {
-// 		const thunkResponse = await response.json()
-// 		dispatch(editUserPassword(thunkResponse))
-// 		return thunkResponse
-// 	}
-// }
+	if(response.ok) {
+		const thunkResponse = await response.json()
+		console.log("RESPONSE FORM THUNK", thunkResponse)
+		dispatch(editUserPassword(thunkResponse))
+		return thunkResponse
+	}
+}
 
 export const deleteUserAccount = () => async (dispatch) => {
 	const response = await fetch("/api/users/delete", {
@@ -170,8 +171,8 @@ export default function reducer(state = initialState, action) {
 			return { user: null };
 		case UPDATE_USER:
 			return {user: action.payload};
-		// case UPDATE_USER_PASSWORD:
-		// 	return {user: action.payload};
+		case UPDATE_USER_PASSWORD:
+			return {user: action.payload};
 		case DELETE_USER:
 			return {user: action.payload}
 		default:
