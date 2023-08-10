@@ -14,6 +14,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    profileImgUrl = db.Column(db.Text, nullable=True)
+    profileBio = db.Column(db.String(100), nullable=True)
+    firstName = db.Column(db.String(30), nullable=True)
+    lastName = db.Column(db.String(30), nullable=True)
 
     posts = db.relationship("Post", back_populates="user_posts", cascade="all, delete-orphan")
     comments = db.relationship("Comment", back_populates="user_comments", cascade="all, delete-orphan")
@@ -41,5 +45,9 @@ class User(db.Model, UserMixin):
             'posts': [post.to_dict() for post in self.posts],
             'comments': [comment.to_dict() for comment in self.comments],
             'journals': [journal.to_dict() for journal in self.journals],
-            'collection': [collection.to_dict() for collection in self.user_collections]
+            'collection': [collection.to_dict() for collection in self.user_collections],
+            'profileImgUrl': self.profileImgUrl,
+            'profileBio': self.profileBio,
+            'firstName': self.firstName,
+            'lastName': self.lastName
         }

@@ -15,6 +15,10 @@ function Account() {
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
+
+    const [profileImgUrl, setProfileImgUrl] = useState("")
+    const [profileBio, setProfileBio] = useState("")
+
     const [password, setPassword] = useState("")
 
     useEffect(() => {
@@ -23,8 +27,12 @@ function Account() {
         if (user === null) return
         else {
             setEmail(user.email)
-            // setFirstName(user.first_name)
-            // setLastName(user.last_name)
+            setFirstName(user.firstName)
+            setLastName(user.lastName)
+            setUsername(user.username)
+            
+            setProfileBio(user.profileBio)
+            setProfileImgUrl(user.profileImgUrl)
         }
 
     }, [dispatch])
