@@ -1,4 +1,4 @@
-import { getAllUsersThunk } from "../../store/user";
+import { getAllStoreDataThunk } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import PeopleSearch from "./PeopleSearch";
@@ -9,20 +9,19 @@ import "./Search.css"
 function Search() {
 
     const dispatch = useDispatch()
-    const allUsersData = useSelector((store) => store.users);
+    const allStoreData = useSelector((store) => store.store);
     const [view, setView] = useState("people");
     const [searchQueryString, setSearchQueryString] = useState("");
 
-    const UsersArray = Object.values(allUsersData)
-
     useEffect(() => {
-        if (!Object.values(allUsersData).length) {
+        if (!allStoreData.posts.length || !allStoreData.user.length || !allStoreData.comments.length || !allStoreData.journals.length) {
             async function fetchData() {
-                await dispatch(getAllUsersThunk())
+                await dispatch(getAllStoreDataThunk())
             }
             fetchData()
         }
-    }, [dispatch, allUsersData]);
+    }, [dispatch, allStoreData]);
+
 
     const handleView = (view) => {
         setView(view);
@@ -35,16 +34,17 @@ function Search() {
         const query = searchQueryString
         if(!query) return null
 
+
         if(view === "people") {
-            const filteredUsers = UsersArray.filter(user => user.username.toLowerCase().startsWith(query.toLowerCase()))
+            const filteredUsers = allStoreData.user.filter(user => user.username.toLowerCase().startsWith(query.toLowerCase()))
             return filteredUsers
         }
 
         if(view === "images") {
-            const allImages = UsersArray.flatMap(user => user.posts)
-            const filteredImages = allImages.filter(img => img.caption.toLowerCase().includes(`#${query}`))
+            const filteredImages = allStoreData.posts.filter(img => img.caption.toLowerCase().includes(`#${query}`))
             return filteredImages
         }
+
 
     }
 

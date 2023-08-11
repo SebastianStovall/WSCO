@@ -1,6 +1,6 @@
-import { getAllUsersThunk } from "../../store/user";
+import { getAllStoreDataThunk } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import "./Gallery.css"
 
@@ -8,22 +8,20 @@ function Gallery() {
 
     const dispatch = useDispatch()
     const history = useHistory()
-    const allUsersData = useSelector((store) => store.users);
+    const allStoreData = useSelector((store) => store.store);
     const {username} = useParams()
 
-    const UsersArray = Object.values(allUsersData)
-
     useEffect(() => {
-        if (!Object.values(allUsersData).length) {
+        if (!allStoreData.posts.length || !allStoreData.user.length || !allStoreData.comments.length || !allStoreData.journals.length) {
             async function fetchData() {
-                await dispatch(getAllUsersThunk())
+                await dispatch(getAllStoreDataThunk())
             }
             fetchData()
         }
-    }, [dispatch, allUsersData]);
+    }, [dispatch, allStoreData]);
 
-    const user = UsersArray.filter((user) => user.username === username)[0]
-    // console.log("USER", user)
+    const user = allStoreData.user.filter((user) => user.username === username)[0]
+    const userPosts = allStoreData.posts.filter((post) => post.userId === user.id)
 
     return (
         <div id="gallery-main-component-container">
@@ -36,7 +34,7 @@ function Gallery() {
                 </div>
             </div>
             <div className="brick-layered-grid-main-container">
-                {user?.posts.map(filteredPhotos => {
+                {userPosts?.map(filteredPhotos => {
                     return <div className="brick-grid-element">
                         <div className="grid-brick-img-container">
                             <img src={filteredPhotos.photoUrl} onClick={() => history.push(`/${user.username}/gallery/${filteredPhotos.id}`)} />

@@ -7,7 +7,6 @@ function PeopleSearch({searchResults}) {
 
     const queryResult = searchResults ? searchResults() : [];
     const history = useHistory()
-    // console.log("RESULTS FOR PEOPLE HOPEFULLY", queryResult);
 
     return (
         <div className="grid-container-main">

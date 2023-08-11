@@ -1,21 +1,20 @@
-import { getAllUsersThunk } from "../../store/user";
+import { getAllStoreDataThunk } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-// await dispatch(getAllUsersThunk())
 
 function HomePage() {
 
     const dispatch = useDispatch()
-    const allUsersData = useSelector((store) => store.users);
+    const allStoreData = useSelector((store) => store.store);
 
     useEffect(() => {
-        if (!Object.values(allUsersData).length) {
+        if (!allStoreData.posts.length || !allStoreData.user.length || !allStoreData.comments.length || !allStoreData.journals.length) {
             async function fetchData() {
-                await dispatch(getAllUsersThunk())
+                await dispatch(getAllStoreDataThunk())
             }
             fetchData()
         }
-    }, [dispatch, allUsersData]);
+    }, [dispatch, allStoreData]);
 
     return (
         <div>
