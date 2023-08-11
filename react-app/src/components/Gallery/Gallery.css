@@ -1,0 +1,41 @@
+#gallery-profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 100%;
+}
+
+#gallery-profile-container > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#gallery-profile-container > img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+#gallery-profile-container > div p {
+    margin: 5px 0;
+}
+#gallery-profile-container > div p:first-child {
+    font-weight: bold;
+}
+
+.profile-bio-text {
+    font-size: 9px;
+    color: rgb(115, 115, 115);
+}
+
+.grid-brick-img-container > img {
+    cursor: pointer;
+}
+
+
+/* GRID CSS FOR THIS PAGE IS COMING FROM ImageSearch.css */

@@ -1,5 +1,4 @@
 .profile-dropdown {
-  /* position: absolute; */
   width: 10vw;
   background-color: black;
   height: 100vw;
@@ -9,19 +8,61 @@
   display: none;
 }
 
+
 #navbar {
   display: flex;
   justify-content: space-between;
+  height: 48px;
+  /* border: 2px solid green; */
+}
+
+#main-navbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  padding-left: 10px;
+  /* border: 1px solid red; */
+}
+
+.WSCO {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* PROFILE DROPDOWN */
+
+
+#profile-dropdown-main-container > button:focus {
+  border-radius: 0px;
+  transition: transform 1s ease;
+  transform: translateX(-100px);
+}
+
+
+#search-bar-user-dropdown-container {
+  display: flex;
+}
+
+svg {
+  color: black;
+  fill: currentColor;
+  position: absolute;
+  top: 4px;
+  right: 90px;
+  width: 24px;
+  height: 24px;
+  padding: 10px;
+  /* border: 1px solid red; */
+  cursor: pointer;
 }
 
 .side-bar-scroll {
-  background-color: black;
-  position: absolute;
-  right: 0px;
+  /* background-color: black; */
   border: 1px solid red;
+  border-radius: none;
 }
 
 .fa-user-circle {
-  position: static;
-  left: -20px;
+  border-radius: none;
+  background-color: none;
 }
