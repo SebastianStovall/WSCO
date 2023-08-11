@@ -10,9 +10,9 @@ post_routes = Blueprint('posts', __name__)
 @login_required
 def delete_post(postId):
 
-    print("POSTIDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD", postId)
     postToDelete = Post.query.get(postId)
 
     db.session.delete(postToDelete)
     db.session.commit()
-    return "successfully deleted"
+
+    return "successfully deleted", 200
