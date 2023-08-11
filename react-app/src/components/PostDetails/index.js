@@ -7,7 +7,7 @@ import "./PostDetails.css"
 
 function PostDetails() {
 
-    const { postId } = useParams()
+    const { username, postId } = useParams()
     const history = useHistory()
     const dispatch = useDispatch()
 
@@ -29,30 +29,33 @@ function PostDetails() {
         history.push(`/${user?.username}/gallery`)
     }
 
-    if(!user) return null
-    // if(!allStoreData.user.length === 0 || !allStoreData.posts.length) return null
+    // if you dont have necessary info to load this page, return null to re-render
+    if(!user || !allStoreData.posts.length) return null
 
-    const loggedInUserPost = user?.posts.filter(img => img.id === Number(postId))[0]
-    let postDetails = loggedInUserPost
+    // find post details
+    const postDetails = allStoreData.posts.filter((post) => post.id === Number(postId))[0]
 
-    if(postDetails === undefined) {
-        postDetails = allStoreData.posts.filter((post) => post.id === Number(postId))[0]
-        user = allStoreData.user.filter((user) => user.id === Number(postDetails.userId))[0]
-    }
+    // find user info thats associated with this post
+    const userIndex = allStoreData.user.findIndex((user) => user.username === username)
+    const userInfo = allStoreData.user[userIndex]
+    const userId = userInfo.id
 
 
     return (
         <div id="post-details-main-container">
-                <p id="exit-button" onClick={() => history.push(`/${user.username}/gallery`)}>X</p>
+                <p id="exit-button" onClick={() => history.push(`/${userInfo?.username}/gallery`)}>X</p>
             <div id="post-details-image-container">
-                <img src={postDetails.photoUrl} />
+                <img src={postDetails?.photoUrl} />
             </div>
             <div id="post-details-crud-buttons">
-                {loggedInUserPost !== undefined ? <button onClick={handleDeletePost}>Edit</button> : null}
-                {loggedInUserPost !== undefined ? <button onClick={handleDeletePost}>Delete</button> : null}
+                {userId === user.id ? <button onClick={() => history.push(`/${user.username}/edit/${postDetails?.id}`)}>Edit</button> : null}
+                {userId === user.id ? <button onClick={handleDeletePost}>Delete</button> : null}
             </div>
             <div id="post-details-post-info-container">
-                <p onClick={() => history.push(`/${user.username}/gallery`)}>{user?.username}</p>
+                <p onClick={() => history.push(`/${userInfo?.username}/gallery`)}>{userInfo?.username}</p>
+                <div id="limit-caption-container">
+                    <p>{postDetails?.caption}</p>
+                </div>
             </div>
         </div>
     )

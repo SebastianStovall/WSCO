@@ -3,6 +3,8 @@ import { dataNormalizer } from "./utilities";
 // constants
 const GET_STORE_DATA = "store/GET__STORE_DATA"
 
+const CREATE_POST = "store/CREATE_POST"
+const EDIT_POST = "store/EDIT_POST"
 const DELETE_POST = "store/DELETE_POST"
 
 // ACTION CREATORS
@@ -11,13 +13,23 @@ const getAllStoreData = (users) => ({
     payload: users
 })
 
+const createPost = (postData) => ({
+    type: CREATE_POST,
+    payload: postData
+})
+
+const editPost = (postData) => ({
+    type: EDIT_POST,
+    payload: postData
+})
+
 const deletePost = (postId) => ({
     type: DELETE_POST,
     payload: postId
 })
 
 // THUNKS
-const initialState = {user: {}, posts: {}, comments: {}, journals: {}};
+const initialState = {user: [], posts: [], comments: [], journals: []};
 
 
 export const getAllStoreDataThunk = () => async (dispatch) => {
@@ -29,6 +41,34 @@ export const getAllStoreDataThunk = () => async (dispatch) => {
     }
 }
 
+export const createNewPostThunk = (formData) => async (dispatch) => {
+    const response = await fetch("/api/posts/new", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+    });
+
+    if(response.ok) {
+        const postData = await response.json();
+        dispatch(createPost(postData))
+        return postData
+    }
+}
+
+export const editPostThunk = (postId, postObj) => async (dispatch) => {
+    const response = await fetch(`/api/posts/${postId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(postObj),
+    });
+
+    if(response.ok) {
+        const postData = await response.json();
+        dispatch(editPost(postData))
+        return postData
+    }
+}
+
 export const deletePostThunk = (postId) => async (dispatch) => {
     console.log("ITS IN THUNK")
     const response = await fetch(`/api/posts/${postId}`, {
@@ -37,7 +77,6 @@ export const deletePostThunk = (postId) => async (dispatch) => {
 
     try {
         if(response.ok) {
-            console.log("ITS OK STATUS")
             const data = await response.json();
             dispatch(deletePost(postId))
             return data
@@ -82,6 +121,22 @@ export default function reducer(state = initialState, action) {
             allJournals = allJournals.flat()
 
             return {...state, user: allUser, posts: allPosts, comments: allComments, journals: allJournals}
+
+        }
+        case CREATE_POST: {
+            const postObj = action.payload
+            const newState = {...state, posts: [postObj, ...state.posts] };
+            return newState
+        }
+        case EDIT_POST: {
+            const editedPost = action.payload
+            const postId = editedPost.id
+
+            const postIndex = state.posts.findIndex(post => post.id === postId)
+
+            const updatedPosts = [...state.posts];
+            updatedPosts[postIndex] = editedPost
+            return {...state, posts: updatedPosts}
 
         }
         case DELETE_POST: {
