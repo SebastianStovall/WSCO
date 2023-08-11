@@ -20,6 +20,8 @@ function Gallery() {
         }
     }, [dispatch, allStoreData]);
 
+    if(!allStoreData.user.length) return null
+
     const user = allStoreData.user.filter((user) => user.username === username)[0]
     const userPosts = allStoreData.posts.filter((post) => post.userId === user.id)
 
@@ -37,7 +39,7 @@ function Gallery() {
                 {userPosts?.map(filteredPhotos => {
                     return <div className="brick-grid-element">
                         <div className="grid-brick-img-container">
-                            <img src={filteredPhotos.photoUrl} onClick={() => history.push(`/${user.username}/gallery/${filteredPhotos.id}`)} />
+                            <img src={filteredPhotos.photoUrl} onClick={() => history.push(`/${user?.username}/gallery/${filteredPhotos.id}`)} />
                         </div>
                     </div>
                 })}

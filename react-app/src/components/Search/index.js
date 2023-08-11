@@ -27,6 +27,8 @@ function Search() {
         setView(view);
     };
 
+    if(!allStoreData.user.length || !allStoreData.posts.length) return null
+
     const searchQueryFunc = () => {
 
         // so if not search found, stop the loop for additional keystrokes
