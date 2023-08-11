@@ -1,9 +1,9 @@
 import { dataNormalizer } from "./utilities";
 
 // constants
-const GET_STORE_DATA = "users/GET__STORE_DATA"
+const GET_STORE_DATA = "store/GET__STORE_DATA"
 
-const DELETE_POST = "users/DELETE_POST"
+const DELETE_POST = "store/DELETE_POST"
 
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
@@ -11,9 +11,9 @@ const getAllStoreData = (users) => ({
     payload: users
 })
 
-const deletePost = (obj) => ({
+const deletePost = (postId) => ({
     type: DELETE_POST,
-    payload: obj
+    payload: postId
 })
 
 // THUNKS
@@ -29,20 +29,23 @@ export const getAllStoreDataThunk = () => async (dispatch) => {
     }
 }
 
-export const deletePostThunk = (postId, userId) => async (dispatch) => {
+export const deletePostThunk = (postId) => async (dispatch) => {
+    console.log("ITS IN THUNK")
     const response = await fetch(`/api/posts/${postId}`, {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        method: "DELETE"
     });
 
-    // if(response.ok) {
-        const data = await response.json();
-        console.log("RESPONSE FORM THUNK", data)
-        dispatch(deletePost({postId, userId}))
-        return data
-    // }
+    try {
+        if(response.ok) {
+            console.log("ITS OK STATUS")
+            const data = await response.json();
+            dispatch(deletePost(postId))
+            return data
+        }
+    } catch(e) {
+        return e
+    }
+
 }
 
 
@@ -82,10 +85,10 @@ export default function reducer(state = initialState, action) {
 
         }
         case DELETE_POST: {
-            const {postId, userId} = action.payload
-            const newState = {...state}
+            const postId = action.payload
+            const newState = { ...state }
 
-            const postArray = newState[userId].posts
+            const postArray = newState.posts
             const indexToDelete = postArray.findIndex((post) => post.id === Number(postId))
 
             postArray.splice(indexToDelete, 1)
