@@ -43,7 +43,7 @@ function PostDetails() {
 
     return (
         <div id="post-details-main-container">
-                <p id="exit-button" onClick={() => history.push(`/${user.username}/gallery`)}>X</p>
+                <p id="exit-button" onClick={() => history.push(`/${userInfo?.username}/gallery`)}>X</p>
             <div id="post-details-image-container">
                 <img src={postDetails?.photoUrl} />
             </div>
@@ -52,7 +52,10 @@ function PostDetails() {
                 {userId === user.id ? <button onClick={handleDeletePost}>Delete</button> : null}
             </div>
             <div id="post-details-post-info-container">
-                <p onClick={() => history.push(`/${user.username}/gallery`)}>{user?.username}</p>
+                <p onClick={() => history.push(`/${userInfo?.username}/gallery`)}>{userInfo?.username}</p>
+                <div id="limit-caption-container">
+                    <p>{postDetails?.caption}</p>
+                </div>
             </div>
         </div>
     )
