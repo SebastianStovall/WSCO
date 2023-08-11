@@ -9,6 +9,7 @@ function Gallery() {
     const dispatch = useDispatch()
     const history = useHistory()
     const allStoreData = useSelector((store) => store.store);
+    const loggedInUser = useSelector((store) => store.session.user)
     const {username} = useParams()
 
     useEffect(() => {
@@ -33,6 +34,7 @@ function Gallery() {
                 <div>
                     <p>{user?.username}</p>
                     <p className="profile-bio-text">{user?.profileBio}</p>
+                    {user?.id === loggedInUser?.id ? <button id="create-post-gallery-button" onClick={() => history.push(`/${user?.username}/new`)}>New Post</button> : ""}
                 </div>
             </div>
             <div className="brick-layered-grid-main-container">

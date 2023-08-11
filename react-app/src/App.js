@@ -10,6 +10,8 @@ import HomePage from "./components/HomePage";
 import Search from "./components/Search";
 import Gallery from "./components/Gallery";
 import PostDetails from "./components/PostDetails";
+import NewPost from "./components/NewPost";
+import EditPost from "./components/EditPost";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,8 +43,14 @@ function App() {
           <Route exact path="/:username/gallery/:postId">
             <PostDetails />
           </Route>
+          <Route exact path="/:username/edit/:postId">
+            <EditPost />
+          </Route>
           <Route exact path="/:username/gallery">
             <Gallery />
+          </Route>
+          <Route exact path="/:username/new">
+            <NewPost />
           </Route>
           <Route exact path="*">
             <h2>"An error occurred"</h2>
