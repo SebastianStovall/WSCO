@@ -1,0 +1,13 @@
+.brick-layered-grid-main-container {
+    columns: 5;
+    column-gap: 15px;
+    padding: 15px;
+    max-width: 100vw; /* grid kept exceed viewport*/
+    overflow-x: hidden;
+    margin: 0 auto;
+}
+
+.grid-brick-img-container > img {
+    width: 100%;
+    margin-bottom: 15px;
+}
