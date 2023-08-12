@@ -2,20 +2,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useModal } from "../../context/Modal";
 import { useEffect, useState } from "react"
 import { editCommentThunk } from '../../store/store';
-
+import { deleteCommentThunk } from '../../store/store';
 
 function EditComment({commentText, commentId}) {
 
     const dispatch = useDispatch()
     const { closeModal } = useModal()
-    const user = useSelector(state => state.session.user)
 
     const [comment, setComment] = useState("")
     const [formErrors, setFormErrors] = useState({})
 
     useEffect(() => {
         setComment(commentText)
-    }, [dispatch])
+    }, [dispatch, commentText])
 
     const handleEditComment = async (e) => {
         e.preventDefault()
@@ -26,7 +25,6 @@ function EditComment({commentText, commentId}) {
             setFormErrors(errors)
             return
         }
-
         if(comment.length > 255) {
             const errors = {}
             errors.comment = "comment cannot exceed 255 characters"
@@ -40,7 +38,11 @@ function EditComment({commentText, commentId}) {
 
         await dispatch(editCommentThunk(commentId, updatedCommentObj))
         closeModal()
+    }
 
+    const handleDeleteComment = async() => {
+        await dispatch(deleteCommentThunk(commentId))
+        closeModal()
     }
 
     return (
@@ -56,8 +58,9 @@ function EditComment({commentText, commentId}) {
                     />
                 </div>
                     {formErrors.comment && <span className='errors'>{formErrors.comment}</span>}
-                <button type="submit" id="submit-new-comment-button">Submit</button>
+                <button type="submit" id="submit-new-comment-button">Save Changes</button>
             </form>
+            <button id="delete-comment-button" onClick={handleDeleteComment}>Delete Comment</button>
         </div>
     )
 }

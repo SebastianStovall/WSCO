@@ -39,3 +39,16 @@ def edit_comment(commentId):
     db.session.commit()
 
     return comment_to_edit.to_dict()
+
+
+@comment_routes.route("/<int:commentId>", methods=["DELETE"])
+@login_required
+def delete_comment(commentId):
+
+    print("ASDASDASDASDASDASD", commentId)
+    comment_to_delete = Comment.query.get(commentId)
+
+    db.session.delete(comment_to_delete)
+    db.session.commit()
+
+    return "successfully deleted", 200

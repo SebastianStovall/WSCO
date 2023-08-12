@@ -50,19 +50,20 @@ function ProfileButton({ user }) {
             {/* <button onClick={handleLogout}>Log Out</button> */}
           </>
         ) : (
-          <>
-            <OpenModalButton
-              buttonText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
+          <></>
+          // <>
+          //   <OpenModalButton
+          //     buttonText="Log In"
+          //     onItemClick={closeMenu}
+          //     modalComponent={<LoginFormModal />}
+          //   />
 
-            <OpenModalButton
-              buttonText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
-          </>
+          //   <OpenModalButton
+          //     buttonText="Sign Up"
+          //     onItemClick={closeMenu}
+          //     modalComponent={<SignupFormModal />}
+          //   />
+          // </>
         )}
       </ul>
       </button>

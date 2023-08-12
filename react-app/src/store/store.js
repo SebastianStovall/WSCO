@@ -1,4 +1,3 @@
-import { dataNormalizer } from "./utilities";
 
 // constants
 const GET_STORE_DATA = "store/GET__STORE_DATA"
@@ -9,6 +8,7 @@ const DELETE_POST = "store/DELETE_POST"
 
 const CREATE_COMMENT = "store/CREATE_COMMENT"
 const EDIT_COMMENT = "store/EDIT_COMMENT"
+const DELETE_COMMENT = "store/DELETE_COMMENT"
 
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
@@ -16,6 +16,7 @@ const getAllStoreData = (users) => ({
     payload: users
 })
 
+//WSCO POST(s) ACTIONS
 const createPost = (postData) => ({
     type: CREATE_POST,
     payload: postData
@@ -31,6 +32,8 @@ const deletePost = (postId) => ({
     payload: postId
 })
 
+
+//COMMENT ACTIONS
 const createComment = (commentData) => ({
     type: CREATE_COMMENT,
     payload: commentData
@@ -39,6 +42,11 @@ const createComment = (commentData) => ({
 const editComment = (commentData) => ({
     type: EDIT_COMMENT,
     payload: commentData
+})
+
+const deleteComment = (commentId) => ({
+    type: DELETE_COMMENT,
+    payload: commentId
 })
 
 // THUNKS
@@ -132,6 +140,17 @@ export const editCommentThunk = (commentId, updatedCommentObj) => async (dispatc
     }
 }
 
+export const deleteCommentThunk = (commentId) => async (dispatch) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: "DELETE"
+    });
+
+    if(response.ok) {
+        dispatch(deleteComment(commentId))
+    }
+
+}
+
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -208,7 +227,16 @@ export default function reducer(state = initialState, action) {
             const updatedComments = [...state.comments];
             updatedComments[commentIndex] = editedComment
             return {...state, comments: updatedComments}
+        }
+        case DELETE_COMMENT: {
+            const commentId = action.payload
+            const newState = { ...state }
 
+            const commentArray = newState.comments
+            const indexToDelete = commentArray.findIndex((comment) => comment.id === Number(commentId))
+
+            commentArray.splice(indexToDelete, 1)
+            return newState
         }
 		default:
 			return state;

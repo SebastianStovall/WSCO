@@ -77,8 +77,7 @@ function PostDetails() {
             <div id="comments-main-container">
                 {comments.length ? <p>Comments: ({comments.length})</p> : ""}
                 {comments.map((comment) => {
-                    {console.log(comment)}
-                    return <div id="single-comment-component">
+                    return <div id="single-comment-component" key={comment.id}>
                         <div>
                             <div id="comment-profile-img-container">
                                 {comment.user.profileImgUrl ? <img src={comment.user.profileImgUrl} />
