@@ -7,6 +7,8 @@ const CREATE_POST = "store/CREATE_POST"
 const EDIT_POST = "store/EDIT_POST"
 const DELETE_POST = "store/DELETE_POST"
 
+const CREATE_COMMENT = "store/CREATE_COMMENT"
+
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
     type: GET_STORE_DATA,
@@ -26,6 +28,11 @@ const editPost = (postData) => ({
 const deletePost = (postId) => ({
     type: DELETE_POST,
     payload: postId
+})
+
+const createComment = (commentData) => ({
+    type: CREATE_COMMENT,
+    payload: commentData
 })
 
 // THUNKS
@@ -70,7 +77,6 @@ export const editPostThunk = (postId, postObj) => async (dispatch) => {
 }
 
 export const deletePostThunk = (postId) => async (dispatch) => {
-    console.log("ITS IN THUNK")
     const response = await fetch(`/api/posts/${postId}`, {
         method: "DELETE"
     });
@@ -83,6 +89,21 @@ export const deletePostThunk = (postId) => async (dispatch) => {
         }
     } catch(e) {
         return e
+    }
+
+}
+
+export const createCommentThunk = (commentObj) => async (dispatch) => {
+    const response = await fetch('/api/comments/new', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(commentObj)
+    })
+
+    if(response.ok) {
+        const commentData = await response.json();
+        dispatch(createComment(commentData))
+        return commentData
     }
 
 }
@@ -148,7 +169,11 @@ export default function reducer(state = initialState, action) {
 
             postArray.splice(indexToDelete, 1)
             return newState
-
+        }
+        case CREATE_COMMENT: {
+            const commentObj = action.payload
+            const newState = {...state, comments: [commentObj, ...state.comments] };
+            return newState
         }
 		default:
 			return state;
