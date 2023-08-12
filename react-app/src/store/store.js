@@ -67,12 +67,12 @@ export const getAllStoreDataThunk = () => async (dispatch) => {
 export const createNewPostThunk = (formData) => async (dispatch) => {
     const response = await fetch("/api/posts/new", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: formData
     });
 
     if(response.ok) {
         const postData = await response.json();
+        console.log("LOOK HERE BOYO", postData)
         dispatch(createPost(postData))
         return postData
     }
