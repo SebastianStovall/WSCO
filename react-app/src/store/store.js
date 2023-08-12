@@ -72,17 +72,15 @@ export const createNewPostThunk = (formData) => async (dispatch) => {
 
     if(response.ok) {
         const postData = await response.json();
-        console.log("LOOK HERE BOYO", postData)
         dispatch(createPost(postData))
         return postData
     }
 }
 
-export const editPostThunk = (postId, postObj) => async (dispatch) => {
+export const editPostThunk = (postId, formData) => async (dispatch) => {
     const response = await fetch(`/api/posts/${postId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postObj),
+        body: formData
     });
 
     if(response.ok) {

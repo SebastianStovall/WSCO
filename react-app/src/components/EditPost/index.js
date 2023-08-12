@@ -2,6 +2,7 @@ import { useHistory, useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { editPostThunk } from "../../store/store";
+import "./EditPost.css"
 
 function EditPost() {
     const history = useHistory()
@@ -9,7 +10,9 @@ function EditPost() {
     const dispatch = useDispatch()
     const allStoreData = useSelector((store) => store.store);
 
-    const [url, setUrl] = useState("")
+    // const [url, setUrl] = useState("")
+    const [image, setImage] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
     const [caption, setCaption] = useState("")
     const [formErrors, setFormErrors] = useState({})
 
@@ -17,7 +20,8 @@ function EditPost() {
 
     useEffect(() => {
         if (postDetails) {
-            setUrl(postDetails.photoUrl);
+            setImage(postDetails.photoUrl);
+            setImageUrl(postDetails.photoUrl)
             setCaption(postDetails.caption);
         }
     }, [postDetails]);
@@ -25,50 +29,53 @@ function EditPost() {
     const handleEditPost = async(e) => {
         e.preventDefault()
 
-        const editedPostObj = {
-            photoUrl: url,
-            caption: caption
-        }
+        const formData = new FormData();
+        formData.append("photoUrl", image);
+        formData.append("caption", caption);
 
-        const response = await dispatch(editPostThunk(postId, editedPostObj))
+        setImageUrl(URL.createObjectURL(image)); // Set temporary image URL
+
+        const response = await dispatch(editPostThunk(postId, formData))
         if(response.errors) {
             const errors = response.errors
             setFormErrors(errors)
+            setImageUrl(null); // Clear temporary image URL on error
         } else {
+            setImageUrl(null); // Clear temporary image URL on error
             history.push(`/${username}/gallery/${postId}`)
         }
     }
 
     return (
-        <div>
-            <h4>Studio</h4>
-
-            <form>
-                <div>
-                    <label>
-                        url
-                    </label>
+        <div id="edit-post-main-container">
+            <h3>Studio</h3>
+            <form encType="multipart/form-data" onSubmit={handleEditPost}>
+                <div id="upload-image-container">
+                    {imageUrl ? <img src={imageUrl} alt="Selected" />
+                    : <img src="https://filetandvine.com/wp-content/uploads/2015/10/pix-vertical-placeholder.jpg" alt="img-placeholder"/>}
+                </div>
+                <div id="file-upload-container">
                     <input
-                        id="new_photo_url"
-                        type="text"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                            setImage(e.target.files[0]);
+                            setImageUrl(URL.createObjectURL(e.target.files[0])); // Update temporary image URL
+                        }}
                     />
                     {formErrors.photoUrl && <span className='errors'>{formErrors.photoUrl}</span>}
                 </div>
-                <div>
-                    <label>
-                        caption
-                    </label>
-                    <input
+                <div id="edit-post-caption-container">
+                    <textarea
                         id="new_photo_caption"
                         type="text"
+                        placeholder="caption"
                         value={caption}
                         onChange={(e) => setCaption(e.target.value)}
                     />
                     {formErrors.caption && <span className='errors'>{formErrors.caption}</span>}
                 </div>
-                <button type="submit" className="new-post-submit-button" onClick={handleEditPost}>Save Changes</button>
+                <button type="submit" className="new-post-submit-button">Save Changes</button>
             </form>
         </div>
     )

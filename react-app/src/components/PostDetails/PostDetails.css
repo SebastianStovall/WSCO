@@ -13,10 +13,9 @@
 }
 
 #post-details-image-container > img {
-    /* height: 30vw; */
     height: 100%;
     width: 100%;
-    object-fit: cover;
+    object-position: center;
     object-fit: fill;
 }
 
