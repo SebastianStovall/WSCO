@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, session, request
 from app.models import db, Post
 from app.forms import PostForm
 from app.forms import SignUpForm
+from app.api.aws_helpers import upload_file_to_s3, get_unique_filename
 from flask_login import current_user, login_user, logout_user, login_required
 
 post_routes = Blueprint('posts', __name__)
@@ -12,11 +13,25 @@ def create_post():
 
     form = PostForm()
     form["csrf_token"].data = request.cookies["csrf_token"]
-
     if form.validate_on_submit():
+
+        # creates aws thing
+        photo = form.data["photoUrl"]
+        # key in and assign file name
+        photo.filename = get_unique_filename(photo.filename)
+        upload = upload_file_to_s3(photo)
+
+        if "url" not in upload:
+        # if the dictionary doesn't have a url key
+        # it means that there was an error when you tried to upload
+        # so you send back that error message (and you printed it above)
+            return jsonify(upload), 400
+
+        url = upload["url"]
+
         new_post = Post(
             userId=current_user.id,
-            photoUrl=form.data["photoUrl"],
+            photoUrl=url, # url from aws
             caption=form.data["caption"]
         )
 
