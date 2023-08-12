@@ -5,6 +5,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { deletePostThunk } from "../../store/store";
 import OpenModalButton from "../OpenModalButton";
 import CreateComment from "../CreateComment";
+import EditComment from "../EditComment";
 import "./PostDetails.css"
 
 function PostDetails() {
@@ -52,7 +53,6 @@ function PostDetails() {
     let hasComment = false
     if(user.id !== userId) {
         const doesUserHaveComment = comments.filter((comment) => comment.userId === user.id)
-        console.log(doesUserHaveComment)
         if(doesUserHaveComment.length > 0) hasComment = true
     }
 
@@ -77,14 +77,18 @@ function PostDetails() {
             <div id="comments-main-container">
                 {comments.length ? <p>Comments: ({comments.length})</p> : ""}
                 {comments.map((comment) => {
+                    {console.log(comment)}
                     return <div id="single-comment-component">
                         <div>
                             <div id="comment-profile-img-container">
                                 {comment.user.profileImgUrl ? <img src={comment.user.profileImgUrl} />
                                 : <img src="https://rassets.vsco.co/avatars/avatar-other.png?c=1&d=1&w=300" />}
                             </div>
-                            <div id="test-contianer">
-                                <p>{comment.comment}</p>
+                            <div id="inner-comment-content">
+                                <p>
+                                    {comment.comment}
+                                    {comment.userId === user.id ? <OpenModalButton buttonText={"edit"} modalComponent={<EditComment commentText={comment.comment} commentId={comment.id}/>} />: null}
+                                </p>
                                 <p>{comment.user.username}</p>
                             </div>
                         </div>

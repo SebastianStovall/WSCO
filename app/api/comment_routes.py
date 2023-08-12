@@ -24,5 +24,18 @@ def create_comment():
     db.session.add(new_comment)
     db.session.commit()
 
-    print("THIS SHOULD BE THE NEW COMMENT", new_comment.to_dict())
     return new_comment.to_dict()
+
+
+@comment_routes.route("/<int:commentId>", methods=["PUT"])
+@login_required
+def edit_comment(commentId):
+
+    data = request.get_json()
+    request_comment = data.get('comment')
+    comment_to_edit = Comment.query.get(commentId)
+
+    comment_to_edit.comment = request_comment
+    db.session.commit()
+
+    return comment_to_edit.to_dict()

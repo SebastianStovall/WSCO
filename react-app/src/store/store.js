@@ -8,6 +8,7 @@ const EDIT_POST = "store/EDIT_POST"
 const DELETE_POST = "store/DELETE_POST"
 
 const CREATE_COMMENT = "store/CREATE_COMMENT"
+const EDIT_COMMENT = "store/EDIT_COMMENT"
 
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
@@ -35,10 +36,15 @@ const createComment = (commentData) => ({
     payload: commentData
 })
 
+const editComment = (commentData) => ({
+    type: EDIT_COMMENT,
+    payload: commentData
+})
+
 // THUNKS
 const initialState = {user: [], posts: [], comments: [], journals: []};
 
-
+// GET (user, posts, comments, journals)
 export const getAllStoreDataThunk = () => async (dispatch) => {
     const response = await fetch("/api/users/");
 
@@ -47,6 +53,8 @@ export const getAllStoreDataThunk = () => async (dispatch) => {
         dispatch(getAllStoreData(data))
     }
 }
+
+//POST THUNKS
 
 export const createNewPostThunk = (formData) => async (dispatch) => {
     const response = await fetch("/api/posts/new", {
@@ -93,6 +101,8 @@ export const deletePostThunk = (postId) => async (dispatch) => {
 
 }
 
+//COMMENT THUNKS
+
 export const createCommentThunk = (commentObj) => async (dispatch) => {
     const response = await fetch('/api/comments/new', {
         method: "POST",
@@ -106,6 +116,20 @@ export const createCommentThunk = (commentObj) => async (dispatch) => {
         return commentData
     }
 
+}
+
+export const editCommentThunk = (commentId, updatedCommentObj) => async (dispatch) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCommentObj),
+    });
+
+    if(response.ok) {
+        const commentData = await response.json();
+        dispatch(editComment(commentData))
+        return commentData
+    }
 }
 
 
@@ -174,6 +198,17 @@ export default function reducer(state = initialState, action) {
             const commentObj = action.payload
             const newState = {...state, comments: [commentObj, ...state.comments] };
             return newState
+        }
+        case EDIT_COMMENT: {
+            const editedComment = action.payload
+            const commentId = editedComment.id
+
+            const commentIndex = state.comments.findIndex(comment => comment.id === commentId)
+
+            const updatedComments = [...state.comments];
+            updatedComments[commentIndex] = editedComment
+            return {...state, comments: updatedComments}
+
         }
 		default:
 			return state;
