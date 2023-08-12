@@ -1,3 +1,6 @@
+/* GALLERY COMPONENT MAIN gallery VIEW CSS */
+/* GRID CSS FOR THE 'gallery' GRID IS COMING FROM ImageSearch.css */
+
 #gallery-profile-container {
     display: flex;
     flex-direction: column;
@@ -37,5 +40,32 @@
     cursor: pointer;
 }
 
+/* VIEW SWITCH CONTAINER CSS */
 
-/* GRID CSS FOR THIS PAGE IS COMING FROM ImageSearch.css */
+div#gallery-options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+
+.gallery-button-view {
+    display: inline-block;
+    background-color: transparent;
+    color: #737373;
+    padding: 0px;
+    margin: 0px;
+    font-size: 9.5px;
+    border-radius: 0px;
+    text-align: left;
+    width: 55px;
+    height: 30px;
+    font-size: 12px;
+}
+
+.gallery-button-view.active {
+    background-color: transparent;
+    color: black;
+}

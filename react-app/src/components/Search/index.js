@@ -55,12 +55,12 @@ function Search() {
         <div id="search-component-main-container">
             <div id="search-bar-section">
                 <div id="search-container">
-                <input id="search_bar" type="text" placeholder="Search" onChange={(e) => setSearchQueryString(e.target.value)}/>
+                    <input id="search_bar" type="text" placeholder="Search" onChange={(e) => setSearchQueryString(e.target.value)}/>
                 </div>
                 <div id="search-options-container">
-                <button className={`search-button-view ${view === "people" ? 'active' : ''}`} onClick={() => handleView("people")}>People</button>
-                <button className={`search-button-view ${view === "images" ? 'active' : ''}`} onClick={() => handleView("images")}>Images</button>
-                <button className={`search-button-view ${view === "journals" ? 'active' : ''}`} onClick={() => handleView("journals")}>Journals</button>
+                    <button className={`search-button-view ${view === "people" ? 'active' : ''}`} onClick={() => handleView("people")}>People</button>
+                    <button className={`search-button-view ${view === "images" ? 'active' : ''}`} onClick={() => handleView("images")}>Images</button>
+                    <button className={`search-button-view ${view === "journals" ? 'active' : ''}`} onClick={() => handleView("journals")}>Journals</button>
                 </div>
             </div>
             {view === "people" && <PeopleSearch searchResults={searchQueryFunc} />}

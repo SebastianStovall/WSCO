@@ -8,6 +8,7 @@ function EditPost() {
     const history = useHistory()
     const {username, postId} = useParams()
     const dispatch = useDispatch()
+    const user = useSelector((state) => state.session.user)
     const allStoreData = useSelector((store) => store.store);
 
     // const [url, setUrl] = useState("")
@@ -48,6 +49,7 @@ function EditPost() {
 
     return (
         <div id="edit-post-main-container">
+            <p id="exit-button" onClick={() => history.push(`/${user?.username}/gallery`)}>X</p>
             <h3>Studio</h3>
             <form encType="multipart/form-data" onSubmit={handleEditPost}>
                 <div id="upload-image-container">
