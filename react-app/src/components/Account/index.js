@@ -39,7 +39,7 @@ function Account() {
             setProfileImgUrl(user.profileImgUrl)
         }
 
-    }, [dispatch])
+    }, [dispatch, user])
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -197,7 +197,7 @@ function Account() {
                     </div>
                 </div>
                 <div id="profile-img-container">
-                    <img src={user?.profileImgUrl} />
+                    <img src={user?.profileImgUrl} alt="profile-img" />
                 </div>
             </form>
 
