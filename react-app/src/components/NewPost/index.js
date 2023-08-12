@@ -1,15 +1,15 @@
 import { useHistory } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createNewPostThunk } from "../../store/store";
-import { getAllStoreDataThunk } from "../../store/store";
 
 function NewPost() {
     const history = useHistory()
     const dispatch = useDispatch()
     const user = useSelector((state) => state.session.user)
 
-    const [url, setUrl] = useState("")
+    const [image, setImage] = useState(null);
+    const [imageLoading, setImageLoading] = useState(false);
     const [caption, setCaption] = useState("")
 
     const [formErrors, setFormErrors] = useState({})
@@ -17,12 +17,12 @@ function NewPost() {
     const handleCreatePost = async(e) => {
         e.preventDefault()
 
-        const newPostObj = {
-            photoUrl: url,
-            caption: caption
-        }
+        const formData = new FormData();
+        formData.append("photoUrl", image);
+        formData.append("caption", caption)
 
-        const response = await dispatch(createNewPostThunk(newPostObj))
+        setImageLoading(true);
+        const response = await dispatch(createNewPostThunk(formData))
         if(response.errors) {
             const errors = response.errors
             setFormErrors(errors)
@@ -36,16 +36,15 @@ function NewPost() {
         <div>
             <h4>Studio</h4>
 
-            <form>
+            <form encType="multipart/form-data" onSubmit={handleCreatePost}>
                 <div>
                     <label>
                         url
                     </label>
                     <input
-                        id="new_photo_url"
-                        type="text"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setImage(e.target.files[0])}
                     />
                     {formErrors.photoUrl && <span className='errors'>{formErrors.photoUrl}</span>}
                 </div>
@@ -61,7 +60,8 @@ function NewPost() {
                     />
                     {formErrors.caption && <span className='errors'>{formErrors.caption}</span>}
                 </div>
-                <button type="submit" className="new-post-submit-button" onClick={handleCreatePost}>Post</button>
+                <button type="submit" className="new-post-submit-button">Post</button>
+                {(imageLoading)&& <p>Loading...</p>}
             </form>
         </div>
     )
