@@ -28,7 +28,6 @@ function PostDetails() {
 
     const handleDeletePost = async() => {
         await dispatch(deletePostThunk(postId))
-        await dispatch(getAllStoreDataThunk())
         history.push(`/${user?.username}/gallery`)
     }
 

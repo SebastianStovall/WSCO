@@ -99,9 +99,9 @@ export const deletePostThunk = (postId) => async (dispatch) => {
 
     try {
         if(response.ok) {
-            const data = await response.json();
+            // const data = await response.json();
             dispatch(deletePost(postId))
-            return data
+            // return data
         }
     } catch(e) {
         return e
