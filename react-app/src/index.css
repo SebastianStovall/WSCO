@@ -70,6 +70,17 @@ button {
     cursor: pointer;
 }
 
-/* button:disabled {
+#modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-radius: 2px;
+    border: 2px solid black;
+}
 
-} */
+#modal-content > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

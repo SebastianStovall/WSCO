@@ -1,4 +1,3 @@
-import { dataNormalizer } from "./utilities";
 
 // constants
 const GET_STORE_DATA = "store/GET__STORE_DATA"
@@ -7,12 +6,17 @@ const CREATE_POST = "store/CREATE_POST"
 const EDIT_POST = "store/EDIT_POST"
 const DELETE_POST = "store/DELETE_POST"
 
+const CREATE_COMMENT = "store/CREATE_COMMENT"
+const EDIT_COMMENT = "store/EDIT_COMMENT"
+const DELETE_COMMENT = "store/DELETE_COMMENT"
+
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
     type: GET_STORE_DATA,
     payload: users
 })
 
+//WSCO POST(s) ACTIONS
 const createPost = (postData) => ({
     type: CREATE_POST,
     payload: postData
@@ -28,10 +32,27 @@ const deletePost = (postId) => ({
     payload: postId
 })
 
+
+//COMMENT ACTIONS
+const createComment = (commentData) => ({
+    type: CREATE_COMMENT,
+    payload: commentData
+})
+
+const editComment = (commentData) => ({
+    type: EDIT_COMMENT,
+    payload: commentData
+})
+
+const deleteComment = (commentId) => ({
+    type: DELETE_COMMENT,
+    payload: commentId
+})
+
 // THUNKS
 const initialState = {user: [], posts: [], comments: [], journals: []};
 
-
+// GET (user, posts, comments, journals)
 export const getAllStoreDataThunk = () => async (dispatch) => {
     const response = await fetch("/api/users/");
 
@@ -40,6 +61,8 @@ export const getAllStoreDataThunk = () => async (dispatch) => {
         dispatch(getAllStoreData(data))
     }
 }
+
+//POST THUNKS
 
 export const createNewPostThunk = (formData) => async (dispatch) => {
     const response = await fetch("/api/posts/new", {
@@ -70,19 +93,60 @@ export const editPostThunk = (postId, postObj) => async (dispatch) => {
 }
 
 export const deletePostThunk = (postId) => async (dispatch) => {
-    console.log("ITS IN THUNK")
     const response = await fetch(`/api/posts/${postId}`, {
         method: "DELETE"
     });
 
     try {
         if(response.ok) {
-            const data = await response.json();
+            // const data = await response.json();
             dispatch(deletePost(postId))
-            return data
+            // return data
         }
     } catch(e) {
         return e
+    }
+
+}
+
+//COMMENT THUNKS
+
+export const createCommentThunk = (commentObj) => async (dispatch) => {
+    const response = await fetch('/api/comments/new', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(commentObj)
+    })
+
+    if(response.ok) {
+        const commentData = await response.json();
+        dispatch(createComment(commentData))
+        return commentData
+    }
+
+}
+
+export const editCommentThunk = (commentId, updatedCommentObj) => async (dispatch) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedCommentObj),
+    });
+
+    if(response.ok) {
+        const commentData = await response.json();
+        dispatch(editComment(commentData))
+        return commentData
+    }
+}
+
+export const deleteCommentThunk = (commentId) => async (dispatch) => {
+    const response = await fetch(`/api/comments/${commentId}`, {
+        method: "DELETE"
+    });
+
+    if(response.ok) {
+        dispatch(deleteComment(commentId))
     }
 
 }
@@ -148,7 +212,31 @@ export default function reducer(state = initialState, action) {
 
             postArray.splice(indexToDelete, 1)
             return newState
+        }
+        case CREATE_COMMENT: {
+            const commentObj = action.payload
+            const newState = {...state, comments: [commentObj, ...state.comments] };
+            return newState
+        }
+        case EDIT_COMMENT: {
+            const editedComment = action.payload
+            const commentId = editedComment.id
 
+            const commentIndex = state.comments.findIndex(comment => comment.id === commentId)
+
+            const updatedComments = [...state.comments];
+            updatedComments[commentIndex] = editedComment
+            return {...state, comments: updatedComments}
+        }
+        case DELETE_COMMENT: {
+            const commentId = action.payload
+            const newState = { ...state }
+
+            const commentArray = newState.comments
+            const indexToDelete = commentArray.findIndex((comment) => comment.id === Number(commentId))
+
+            commentArray.splice(indexToDelete, 1)
+            return newState
         }
 		default:
 			return state;
