@@ -1,7 +1,9 @@
 import { getAllStoreDataThunk } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import Journals from "./Journals";
+import Collection from "./Collection";
 import "./Gallery.css"
 
 function Gallery() {
@@ -12,6 +14,8 @@ function Gallery() {
     const loggedInUser = useSelector((store) => store.session.user)
     const {username} = useParams()
 
+    const [view, setView] = useState("gallery");
+
     useEffect(() => {
         if (!allStoreData.posts.length || !allStoreData.user.length || !allStoreData.comments.length || !allStoreData.journals.length) {
             async function fetchData() {
@@ -20,6 +24,10 @@ function Gallery() {
             fetchData()
         }
     }, [dispatch, allStoreData]);
+
+    const handleView = (view) => {
+        setView(view);
+    };
 
     if(!allStoreData.user.length) return null
 
@@ -34,10 +42,16 @@ function Gallery() {
                 <div>
                     <p>{user?.username}</p>
                     <p className="profile-bio-text">{user?.profileBio}</p>
-                    {user?.id === loggedInUser?.id ? <button id="create-post-gallery-button" onClick={() => history.push(`/${user?.username}/new`)}>New Post</button> : ""}
+                    {user?.id === loggedInUser?.id ?
+                    <button id="create-post-gallery-button" onClick={() => history.push(`/${user?.username}/new`)}>New Post</button> : ""}
+                </div>
+                <div id="gallery-options-container">
+                    <button className={`gallery-button-view ${view === "gallery" ? 'active' : ''}`} onClick={() => handleView("gallery")}>Gallery</button>
+                    <button className={`gallery-button-view ${view === "journals" ? 'active' : ''}`} onClick={() => handleView("journals")}>Journals</button>
+                    <button className={`gallery-button-view ${view === "collection" ? 'active' : ''}`} onClick={() => handleView("collection")}>Collection</button>
                 </div>
             </div>
-            <div className="brick-layered-grid-main-container">
+            {view === "gallery" && <div className="brick-layered-grid-main-container">
                 {userPosts?.map(filteredPhotos => {
                     return <div className="brick-grid-element">
                         <div className="grid-brick-img-container">
@@ -45,7 +59,9 @@ function Gallery() {
                         </div>
                     </div>
                 })}
-            </div>
+            </div>}
+            {view === "journals" && <Journals store={allStoreData} />}
+            {view === "collection" && <Collection store={allStoreData} currUser={user} />}
         </div>
     )
 }

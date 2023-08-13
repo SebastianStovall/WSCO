@@ -13,10 +13,9 @@
 }
 
 #post-details-image-container > img {
-    /* height: 30vw; */
     height: 100%;
     width: 100%;
-    object-fit: cover;
+    object-position: center;
     object-fit: fill;
 }
 
@@ -45,7 +44,7 @@
     padding: 8px 12px;
     background-color: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
-    height: 30px;
+    height: 40px;
 }
 
 #post-details-post-info-container {

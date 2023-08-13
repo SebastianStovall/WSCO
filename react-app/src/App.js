@@ -12,6 +12,7 @@ import Gallery from "./components/Gallery";
 import PostDetails from "./components/PostDetails";
 import NewPost from "./components/NewPost";
 import EditPost from "./components/EditPost";
+import CollectionPostDetails from "./components/Gallery/CollectionPostDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,9 @@ function App() {
           </Route>
           <Route exact path="/:username/gallery/:postId">
             <PostDetails />
+          </Route>
+          <Route exact path="/:username/collections/:postId">
+            <CollectionPostDetails />
           </Route>
           <Route exact path="/:username/edit/:postId">
             <EditPost />

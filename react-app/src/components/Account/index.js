@@ -39,7 +39,7 @@ function Account() {
             setProfileImgUrl(user.profileImgUrl)
         }
 
-    }, [dispatch, user])
+    }, [dispatch])
 
     const handleLogout = (e) => {
         e.preventDefault();

@@ -1,0 +1,41 @@
+#edit-post-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#edit-post-caption-container {
+    margin: 20px 0px;
+}
+
+#edit-post-caption-container > textarea {
+    width: 100%;
+    height: 63px;
+    border: none;
+    background-color: #F6F6F6;
+    border-radius: 12px;
+    border-spacing: 0;
+    cursor: default;
+    overflow: hidden;
+    padding-top: 15px;
+    text-indent: 30px;
+    border: 1px solid black;
+}
+
+#edit-post-caption-container > textarea::placeholder {
+    transition: transform 0.3s, font-size 0.3s;
+}
+
+#edit-post-caption-container > textarea:focus::placeholder {
+    transform: translate(-60px, -80%) scale(0.8);
+    font-size: 14px;
+}
+
+#exit-button {
+    position: absolute;
+    left: 50px;
+    top: 45px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
