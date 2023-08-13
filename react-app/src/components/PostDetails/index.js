@@ -7,6 +7,7 @@ import OpenModalButton from "../OpenModalButton";
 import CreateComment from "../CreateComment";
 import EditComment from "../EditComment";
 import { addToCollectionThunk } from "../../store/store";
+import { deleteFromCollectionThunk } from "../../store/store";
 import "./PostDetails.css"
 
 function PostDetails() {
@@ -29,6 +30,7 @@ function PostDetails() {
 
     const handleDeletePost = async() => {
         await dispatch(deletePostThunk(postId))
+        // await dispatch(getAllStoreDataThunk())
         history.push(`/${user?.username}/gallery`)
     }
 
@@ -39,33 +41,38 @@ function PostDetails() {
         history.push(`/${user.username}/gallery`)
     }
 
+    const handleRemoveFromCollection = async() => {
+        ("WE WE GETTING INTO HERE???????????")
+        await dispatch(deleteFromCollectionThunk(user.id, postId))
+        history.push(`/${user.username}/gallery`)
+    }
+
     // if you dont have necessary info to load this page, return null to re-render
     if(!user || !allStoreData.posts.length) return null
 
     // find post details
-    const postDetails = allStoreData.posts.filter((post) => post.id === Number(postId))[0]
-    const comments = allStoreData.comments.filter((comment) => comment.postId === Number(postId))
+    const postDetails = allStoreData?.posts.filter((post) => post.id === Number(postId))[0]
+    const comments = allStoreData?.comments.filter((comment) => comment.postId === Number(postId))
 
     for (let index = 0; index < comments.length; index++) {
         const ele = comments[index]
-        const user = allStoreData.user.find((user) => user.id === ele.userId)
+        const user = allStoreData?.user.find((user) => user.id === ele.userId)
         ele.user = user
     }
 
     // find user info thats associated with this post
-    const userIndex = allStoreData.user.findIndex((user) => user.username === username)
-    const userInfo = allStoreData.user[userIndex]
+    const userIndex = allStoreData?.user.findIndex((user) => user.username === username)
+    const userInfo = allStoreData?.user[userIndex]
     const userId = userInfo.id
 
     // see if the user has the post in their collection... will return -1 if NOT IN COLLECTION
-    const hasPostInCollection = user.collection.findIndex((likedPost) => likedPost.id === postDetails.id)
+    const hasPostInCollection = user?.collection?.filter((likedPost) => likedPost.id === postDetails?.id)
 
     let hasComment = false
     if(user.id !== userId) {
         const doesUserHaveComment = comments.filter((comment) => comment.userId === user.id)
         if(doesUserHaveComment.length > 0) hasComment = true
     }
-
 
     return (
         <div id="post-details-main-container">
@@ -77,7 +84,8 @@ function PostDetails() {
                 {userId === user.id ? <button onClick={() => history.push(`/${user.username}/edit/${postDetails?.id}`)}>Edit</button> : null}
                 {userId === user.id ? <button onClick={handleDeletePost}>Delete</button> : null}
                 {userId !== user.id && !hasComment ? <OpenModalButton buttonText={"Comment"} modalComponent={<CreateComment postId={postDetails.id}/>} /> : null}
-                {hasPostInCollection === -1 && postDetails.userId !== user.id ? <button id="add-to-collection-button" onClick={handleAddToCollection}>Add to Collection</button> : ""}
+                {hasPostInCollection.length === 0 && postDetails?.userId !== user.id ? <button id="add-to-collection-button" onClick={handleAddToCollection}>Add to Collection</button> : ""}
+                {hasPostInCollection.length > 0 && postDetails?.userId !== user.id ? <button id="add-to-collection-button" onClick={handleRemoveFromCollection}>Remove from Collection</button> : ""}
             </div>
             <div id="post-details-post-info-container">
                 <p onClick={() => history.push(`/${userInfo?.username}/gallery`)}>{userInfo?.username}</p>

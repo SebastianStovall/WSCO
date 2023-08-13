@@ -11,6 +11,7 @@ const EDIT_COMMENT = "store/EDIT_COMMENT"
 const DELETE_COMMENT = "store/DELETE_COMMENT"
 
 const ADD_TO_COLLECTION = "store/ADD_TO_COLLECTION"
+const DELETE_FROM_COLLECTION = "store/DELETE_FROM_COLLECTION"
 
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
@@ -55,6 +56,11 @@ const deleteComment = (commentId) => ({
 
 const addToCollection = (collectionInfo) => ({
     type: ADD_TO_COLLECTION,
+    payload: collectionInfo
+})
+
+const deleteFromCollection = (collectionInfo) => ({
+    type: DELETE_FROM_COLLECTION,
     payload: collectionInfo
 })
 
@@ -175,6 +181,17 @@ export const addToCollectionThunk = (userId, postId) => async (dispatch) => {
 
 }
 
+export const deleteFromCollectionThunk = (userId, postId) => async (dispatch) => {
+    const response = await fetch(`/api/collections/${postId}`, {
+        method: "DELETE"
+    });
+
+    if(response.ok) {
+        dispatch(deleteFromCollection({userId, postId}))
+    }
+
+}
+
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -278,6 +295,17 @@ export default function reducer(state = initialState, action) {
 
             // Update the user's collection array by adding the new collection object
             newState.user[findUserIndex].collection.unshift(newCollectionObj);
+            return newState;
+        }
+        case DELETE_FROM_COLLECTION: {
+            const {userId, postId} = action.payload
+            const newState = {...state}
+
+            const findUserIndex = newState.user.findIndex((user) => user.id === Number(userId))
+
+            const findCollectionIndex = newState.user[findUserIndex].collection.findIndex((collection) => collection.id === Number(postId))
+            newState.user[findUserIndex].collection.splice(findCollectionIndex, 1)
+
             return newState;
         }
 		default:
