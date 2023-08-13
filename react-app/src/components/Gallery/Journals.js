@@ -1,4 +1,6 @@
-function Journals() {
+
+function Journals({store}) {
+    
     return (
         <h3>JOURNAL GRID HERE</h3>
     )

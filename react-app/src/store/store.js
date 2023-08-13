@@ -10,6 +10,8 @@ const CREATE_COMMENT = "store/CREATE_COMMENT"
 const EDIT_COMMENT = "store/EDIT_COMMENT"
 const DELETE_COMMENT = "store/DELETE_COMMENT"
 
+const ADD_TO_COLLECTION = "store/ADD_TO_COLLECTION"
+
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
     type: GET_STORE_DATA,
@@ -48,6 +50,14 @@ const deleteComment = (commentId) => ({
     type: DELETE_COMMENT,
     payload: commentId
 })
+
+//COLLECTION ACTIONS
+
+const addToCollection = (collectionInfo) => ({
+    type: ADD_TO_COLLECTION,
+    payload: collectionInfo
+})
+
 
 // THUNKS
 const initialState = {user: [], posts: [], comments: [], journals: []};
@@ -149,6 +159,22 @@ export const deleteCommentThunk = (commentId) => async (dispatch) => {
 
 }
 
+//COLLECTION THUNKS
+
+export const addToCollectionThunk = (userId, postId) => async (dispatch) => {
+    const response = await fetch('/api/collections/add', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({userId, postId})
+    })
+
+    if(response.ok) {
+        const data = await response.json()
+        dispatch(addToCollection({userId, postId}))
+    }
+
+}
+
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -235,6 +261,24 @@ export default function reducer(state = initialState, action) {
 
             commentArray.splice(indexToDelete, 1)
             return newState
+        }
+        case ADD_TO_COLLECTION: {
+            const {userId, postId} = action.payload
+            const newState = {...state}
+
+            const postInfoForCollection = state.posts.find((post) => post.id === Number(postId))
+            const findUserIndex = state.user.findIndex((user) => user.id === Number(userId))
+
+            const newCollectionObj = {
+                caption: postInfoForCollection.caption,
+                id: Number(postId),
+                photoUrl: postInfoForCollection.photoUrl,
+                userId: postInfoForCollection.userId
+            }
+
+            // Update the user's collection array by adding the new collection object
+            newState.user[findUserIndex].collection.unshift(newCollectionObj);
+            return newState;
         }
 		default:
 			return state;

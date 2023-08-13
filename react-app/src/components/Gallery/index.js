@@ -60,8 +60,8 @@ function Gallery() {
                     </div>
                 })}
             </div>}
-            {view === "journals" && <Journals />}
-            {view === "collection" && <Collection />}
+            {view === "journals" && <Journals store={allStoreData} />}
+            {view === "collection" && <Collection store={allStoreData} currUser={user} />}
         </div>
     )
 }

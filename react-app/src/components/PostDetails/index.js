@@ -6,6 +6,7 @@ import { deletePostThunk } from "../../store/store";
 import OpenModalButton from "../OpenModalButton";
 import CreateComment from "../CreateComment";
 import EditComment from "../EditComment";
+import { addToCollectionThunk } from "../../store/store";
 import "./PostDetails.css"
 
 function PostDetails() {
@@ -31,6 +32,13 @@ function PostDetails() {
         history.push(`/${user?.username}/gallery`)
     }
 
+    const handleAddToCollection = async() => {
+        await dispatch(addToCollectionThunk(user.id, postId))
+        // only way i could fix (add to collection bug), wont update without this dispatch
+        await dispatch(getAllStoreDataThunk())
+        history.push(`/${user.username}/gallery`)
+    }
+
     // if you dont have necessary info to load this page, return null to re-render
     if(!user || !allStoreData.posts.length) return null
 
@@ -49,6 +57,9 @@ function PostDetails() {
     const userInfo = allStoreData.user[userIndex]
     const userId = userInfo.id
 
+    // see if the user has the post in their collection... will return -1 if NOT IN COLLECTION
+    const hasPostInCollection = user.collection.findIndex((likedPost) => likedPost.id === postDetails.id)
+
     let hasComment = false
     if(user.id !== userId) {
         const doesUserHaveComment = comments.filter((comment) => comment.userId === user.id)
@@ -66,6 +77,7 @@ function PostDetails() {
                 {userId === user.id ? <button onClick={() => history.push(`/${user.username}/edit/${postDetails?.id}`)}>Edit</button> : null}
                 {userId === user.id ? <button onClick={handleDeletePost}>Delete</button> : null}
                 {userId !== user.id && !hasComment ? <OpenModalButton buttonText={"Comment"} modalComponent={<CreateComment postId={postDetails.id}/>} /> : null}
+                {hasPostInCollection === -1 && postDetails.userId !== user.id ? <button id="add-to-collection-button" onClick={handleAddToCollection}>Add to Collection</button> : ""}
             </div>
             <div id="post-details-post-info-container">
                 <p onClick={() => history.push(`/${userInfo?.username}/gallery`)}>{userInfo?.username}</p>
