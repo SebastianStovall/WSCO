@@ -10,6 +10,9 @@ const CREATE_COMMENT = "store/CREATE_COMMENT"
 const EDIT_COMMENT = "store/EDIT_COMMENT"
 const DELETE_COMMENT = "store/DELETE_COMMENT"
 
+const ADD_TO_COLLECTION = "store/ADD_TO_COLLECTION"
+const DELETE_FROM_COLLECTION = "store/DELETE_FROM_COLLECTION"
+
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
     type: GET_STORE_DATA,
@@ -49,6 +52,19 @@ const deleteComment = (commentId) => ({
     payload: commentId
 })
 
+//COLLECTION ACTIONS
+
+const addToCollection = (collectionInfo) => ({
+    type: ADD_TO_COLLECTION,
+    payload: collectionInfo
+})
+
+const deleteFromCollection = (collectionInfo) => ({
+    type: DELETE_FROM_COLLECTION,
+    payload: collectionInfo
+})
+
+
 // THUNKS
 const initialState = {user: [], posts: [], comments: [], journals: []};
 
@@ -72,17 +88,15 @@ export const createNewPostThunk = (formData) => async (dispatch) => {
 
     if(response.ok) {
         const postData = await response.json();
-        console.log("LOOK HERE BOYO", postData)
         dispatch(createPost(postData))
         return postData
     }
 }
 
-export const editPostThunk = (postId, postObj) => async (dispatch) => {
+export const editPostThunk = (postId, formData) => async (dispatch) => {
     const response = await fetch(`/api/posts/${postId}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postObj),
+        body: formData
     });
 
     if(response.ok) {
@@ -147,6 +161,33 @@ export const deleteCommentThunk = (commentId) => async (dispatch) => {
 
     if(response.ok) {
         dispatch(deleteComment(commentId))
+    }
+
+}
+
+//COLLECTION THUNKS
+
+export const addToCollectionThunk = (userId, postId) => async (dispatch) => {
+    const response = await fetch('/api/collections/add', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({userId, postId})
+    })
+
+    if(response.ok) {
+        const data = await response.json()
+        dispatch(addToCollection({userId, postId}))
+    }
+
+}
+
+export const deleteFromCollectionThunk = (userId, postId) => async (dispatch) => {
+    const response = await fetch(`/api/collections/${postId}`, {
+        method: "DELETE"
+    });
+
+    if(response.ok) {
+        dispatch(deleteFromCollection({userId, postId}))
     }
 
 }
@@ -237,6 +278,35 @@ export default function reducer(state = initialState, action) {
 
             commentArray.splice(indexToDelete, 1)
             return newState
+        }
+        case ADD_TO_COLLECTION: {
+            const {userId, postId} = action.payload
+            const newState = {...state}
+
+            const postInfoForCollection = state.posts.find((post) => post.id === Number(postId))
+            const findUserIndex = state.user.findIndex((user) => user.id === Number(userId))
+
+            const newCollectionObj = {
+                caption: postInfoForCollection.caption,
+                id: Number(postId),
+                photoUrl: postInfoForCollection.photoUrl,
+                userId: postInfoForCollection.userId
+            }
+
+            // Update the user's collection array by adding the new collection object
+            newState.user[findUserIndex].collection.unshift(newCollectionObj);
+            return newState;
+        }
+        case DELETE_FROM_COLLECTION: {
+            const {userId, postId} = action.payload
+            const newState = {...state}
+
+            const findUserIndex = newState.user.findIndex((user) => user.id === Number(userId))
+
+            const findCollectionIndex = newState.user[findUserIndex].collection.findIndex((collection) => collection.id === Number(postId))
+            newState.user[findUserIndex].collection.splice(findCollectionIndex, 1)
+
+            return newState;
         }
 		default:
 			return state;

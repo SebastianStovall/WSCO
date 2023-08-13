@@ -2,15 +2,14 @@ import { getAllStoreDataThunk } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { deletePostThunk } from "../../store/store";
 import OpenModalButton from "../OpenModalButton";
 import CreateComment from "../CreateComment";
 import EditComment from "../EditComment";
 import { addToCollectionThunk } from "../../store/store";
 import { deleteFromCollectionThunk } from "../../store/store";
-import "./PostDetails.css"
 
-function PostDetails() {
+
+function CollectionPostDetails() {
 
     const { username, postId } = useParams()
     const history = useHistory()
@@ -28,12 +27,6 @@ function PostDetails() {
         }
     }, [dispatch, allStoreData]);
 
-    const handleDeletePost = async() => {
-        await dispatch(deletePostThunk(postId))
-        // await dispatch(getAllStoreDataThunk())
-        history.push(`/${user?.username}/gallery`)
-    }
-
     const handleAddToCollection = async() => {
         await dispatch(addToCollectionThunk(user.id, postId))
         // only way i could fix (add to collection bug), wont update without this dispatch
@@ -42,7 +35,6 @@ function PostDetails() {
     }
 
     const handleRemoveFromCollection = async() => {
-        ("WE WE GETTING INTO HERE???????????")
         await dispatch(deleteFromCollectionThunk(user.id, postId))
         history.push(`/${user.username}/gallery`)
     }
@@ -76,19 +68,17 @@ function PostDetails() {
 
     return (
         <div id="post-details-main-container">
-                <p id="exit-button" onClick={() => history.push(`/${userInfo?.username}/gallery`)}>X</p>
+                <p id="exit-button" onClick={() => history.push(`/${username}/gallery`)}>X</p>
             <div id="post-details-image-container">
                 <img src={postDetails?.photoUrl} />
             </div>
             <div id="post-details-crud-buttons">
-                {userId === user.id ? <button onClick={() => history.push(`/${user.username}/edit/${postDetails?.id}`)}>Edit</button> : null}
-                {userId === user.id ? <button onClick={handleDeletePost}>Delete</button> : null}
                 {userId !== user.id && !hasComment ? <OpenModalButton buttonText={"Comment"} modalComponent={<CreateComment postId={postDetails.id}/>} /> : null}
                 {hasPostInCollection.length === 0 && postDetails?.userId !== user.id ? <button id="add-to-collection-button" onClick={handleAddToCollection}>Add to Collection</button> : ""}
                 {hasPostInCollection.length > 0 && postDetails?.userId !== user.id ? <button id="add-to-collection-button" onClick={handleRemoveFromCollection}>Remove from Collection</button> : ""}
             </div>
             <div id="post-details-post-info-container">
-                <p onClick={() => history.push(`/${userInfo?.username}/gallery`)}>{userInfo?.username}</p>
+                <p onClick={() => history.push(`/${postDetails?.user?.username}/gallery`)}>{postDetails?.user?.username}</p>
                 <div id="limit-caption-container">
                     <p>{postDetails?.caption}</p>
                 </div>
@@ -115,7 +105,6 @@ function PostDetails() {
             </div>
         </div>
     )
-
 }
 
-export default PostDetails
+export default CollectionPostDetails
