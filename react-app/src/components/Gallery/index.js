@@ -42,8 +42,11 @@ function Gallery() {
                 <div>
                     <p>{user?.username}</p>
                     <p className="profile-bio-text">{user?.profileBio}</p>
-                    {user?.id === loggedInUser?.id ?
+                    {user?.id === loggedInUser?.id && view === "gallery" ?
                     <button id="create-post-gallery-button" onClick={() => history.push(`/${user?.username}/new`)}>New Post</button> : ""}
+
+                    {user?.id === loggedInUser?.id && view === "journals" ?
+                    <button id="create-post-gallery-button" onClick={() => history.push(`/${user?.username}/journals/new`)}>New Journal Entry</button> : ""}
                 </div>
                 <div id="gallery-options-container">
                     <button className={`gallery-button-view ${view === "gallery" ? 'active' : ''}`} onClick={() => handleView("gallery")}>Gallery</button>
@@ -60,7 +63,7 @@ function Gallery() {
                     </div>
                 })}
             </div>}
-            {view === "journals" && <Journals store={allStoreData} />}
+            {view === "journals" && <Journals store={allStoreData} currUser={user} />}
             {view === "collection" && <Collection store={allStoreData} currUser={user} />}
         </div>
     )
