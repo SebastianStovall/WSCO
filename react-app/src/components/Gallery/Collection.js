@@ -37,7 +37,7 @@ function Collection({store, currUser}) {
     return (
         <div className="grid-collection-container-main">
             {likedPosts?.map(post => {
-                return <div className="grid-element-collection" onClick={() => history.push(`/${post.user.username}/gallery/${post.id}`)}>
+                return <div className="grid-element-collection" onClick={() => history.push(`/${currUser.username}/collections/${post.id}`)}>
                     <div className="grid-collection-img-container">
                         <img src={post.photoUrl} height={generateRandomHeight()} alt="collection-img-post" />
                     </div>
