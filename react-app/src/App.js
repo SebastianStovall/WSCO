@@ -15,6 +15,7 @@ import EditPost from "./components/EditPost";
 import CollectionPostDetails from "./components/Gallery/CollectionPostDetails";
 import JournalDetails from "./components/JournalDetails";
 import NewJournal from "./components/NewJournal";
+import ImageSearchPostDetails from "./components/Search/ImageSearchPostDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route exact path="/:username/journals/new">
             <NewJournal />
+          </Route>
+          <Route exact path="/:username/image/:postId">
+            <ImageSearchPostDetails />
           </Route>
           <Route exact path="/:username/gallery/:postId">
             <PostDetails />
