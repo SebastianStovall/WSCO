@@ -35,15 +35,17 @@ function Collection({store, currUser}) {
     }
 
     return (
-        <div className="grid-collection-container-main">
-            {likedPosts?.map(post => {
-                return <div className="grid-element-collection" onClick={() => history.push(`/${currUser.username}/collections/${post.id}`)}>
-                    <div className="grid-collection-img-container">
-                        <img src={post.photoUrl} height={generateRandomHeight()} alt="collection-img-post" />
+        <div id="collection-main-component-container">
+            <div className="grid-collection-container-main">
+                {likedPosts?.map(post => {
+                    return <div className="grid-element-collection" onClick={() => history.push(`/${currUser.username}/collections/${post.id}`)}>
+                        <div className="grid-collection-img-container">
+                            <img src={post.photoUrl} height={generateRandomHeight()} alt="collection-img-post" />
+                        </div>
+                            <p>{post.user.username}</p>
                     </div>
-                        <p>{post.user.username}</p>
-                </div>
-            })}
+                })}
+            </div>
         </div>
     )
 }

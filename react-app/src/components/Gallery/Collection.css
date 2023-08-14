@@ -1,9 +1,15 @@
+#collection-main-component-container {
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+}
+
 .grid-collection-container-main {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    row-gap: 50px;
-    margin-top: 50px;
-    width: 100%;
+    align-items: center;
+    justify-items: center;
+    gap: 40px;
 }
 
 .grid-element-collection {
@@ -31,7 +37,7 @@
 }
 
 
-@media (max-width: 1443px) {
+@media (max-width: 1431px) {
     .grid-collection-container-main {
         grid-template-columns: repeat(4, 1fr);
     }

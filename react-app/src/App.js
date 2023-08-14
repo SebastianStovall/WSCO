@@ -13,6 +13,8 @@ import PostDetails from "./components/PostDetails";
 import NewPost from "./components/NewPost";
 import EditPost from "./components/EditPost";
 import CollectionPostDetails from "./components/Gallery/CollectionPostDetails";
+import JournalDetails from "./components/JournalDetails";
+import NewJournal from "./components/NewJournal";
 
 function App() {
   const dispatch = useDispatch();
@@ -41,6 +43,9 @@ function App() {
           <Route exact path="/search">
             <Search />
           </Route>
+          <Route exact path="/:username/journals/new">
+            <NewJournal />
+          </Route>
           <Route exact path="/:username/gallery/:postId">
             <PostDetails />
           </Route>
@@ -49,6 +54,9 @@ function App() {
           </Route>
           <Route exact path="/:username/edit/:postId">
             <EditPost />
+          </Route>
+          <Route exact path="/:username/journals/:journalId">
+            <JournalDetails />
           </Route>
           <Route exact path="/:username/gallery">
             <Gallery />
