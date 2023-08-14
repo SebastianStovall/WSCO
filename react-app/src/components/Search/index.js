@@ -60,11 +60,10 @@ function Search() {
                 <div id="search-options-container">
                     <button className={`search-button-view ${view === "people" ? 'active' : ''}`} onClick={() => handleView("people")}>People</button>
                     <button className={`search-button-view ${view === "images" ? 'active' : ''}`} onClick={() => handleView("images")}>Images</button>
-                    <button className={`search-button-view ${view === "journals" ? 'active' : ''}`} onClick={() => handleView("journals")}>Journals</button>
                 </div>
             </div>
             {view === "people" && <PeopleSearch searchResults={searchQueryFunc} />}
-            {view === "images" && <ImageSearch searchResults={searchQueryFunc} />}
+            {view === "images" && <ImageSearch searchResults={searchQueryFunc} store={allStoreData} />}
             {view === "journals" && <JournalSearch />}
         </div>
     )

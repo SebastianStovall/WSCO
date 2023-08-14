@@ -7,11 +7,11 @@ journals = [
     {
         "title": "Smile More",
         "description": "life's good",
-        "userId": 2
+        "userId": 1
     },
     {
         "title": "Blossom",
         "description": "",
-        "userId": 3
+        "userId": 1
     }
 ]

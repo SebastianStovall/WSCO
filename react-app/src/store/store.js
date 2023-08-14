@@ -13,6 +13,8 @@ const DELETE_COMMENT = "store/DELETE_COMMENT"
 const ADD_TO_COLLECTION = "store/ADD_TO_COLLECTION"
 const DELETE_FROM_COLLECTION = "store/DELETE_FROM_COLLECTION"
 
+const CREATE_JOURNAL = "store/CREATE_JOURNAL"
+
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
     type: GET_STORE_DATA,
@@ -62,6 +64,13 @@ const addToCollection = (collectionInfo) => ({
 const deleteFromCollection = (collectionInfo) => ({
     type: DELETE_FROM_COLLECTION,
     payload: collectionInfo
+})
+
+// JOURNAL ACTIONS
+
+const addJournal = (journalObj) => ({
+    type: CREATE_JOURNAL,
+    payload: journalObj
 })
 
 
@@ -192,6 +201,21 @@ export const deleteFromCollectionThunk = (userId, postId) => async (dispatch) =>
 
 }
 
+// JOURNAL THUNKS
+
+export const addJournalThunk = (formData) => async (dispatch) => {
+    const response = await fetch('/api/journals/new', {
+        method: "POST",
+        body: formData
+    })
+
+    if(response.ok) {
+        const journalData = await response.json();
+        dispatch(addJournal(journalData))
+    }
+
+}
+
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -306,6 +330,12 @@ export default function reducer(state = initialState, action) {
             const findCollectionIndex = newState.user[findUserIndex].collection.findIndex((collection) => collection.id === Number(postId))
             newState.user[findUserIndex].collection.splice(findCollectionIndex, 1)
 
+            return newState;
+        }
+        case CREATE_JOURNAL: {
+            const journalObj = action.payload;
+            const newJournals = [journalObj, ...state.journals];
+            const newState = { ...state, journals: newJournals };
             return newState;
         }
 		default:
