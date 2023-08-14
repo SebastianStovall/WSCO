@@ -13,7 +13,7 @@
 }
 
 #journal-cover-desc-text {
-    height: 140px;
+    height: 200px;
     width: 620px;
 }
 
@@ -25,13 +25,11 @@
     word-break: break-word;
 }
 
-#journal-cover-grid-component {
-    cursor: pointer;
-}
 
 #journal-cover-grid-component > img {
     object-fit: cover;
     object-position: center;
+    cursor: pointer;
 }
 
 #journal-cover-desc-text > p {
@@ -42,6 +40,27 @@
     word-break: break-word;
 }
 
+#journal-cover-desc-text > button {
+    border-radius: 0px;
+}
+
+/* DELETE JOURNAL MODAL POPUP CSS */
+
+#delete-journal-modal > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 13px;
+}
+
+#delete-journal-modal > h3 {
+    text-align: center;
+}
+
+#delete-journal-modal > div > button {
+    width: 60%;
+}
 
 @media (max-width: 1300px) {
     #journal-cover-grid-container {

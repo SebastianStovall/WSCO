@@ -8,9 +8,9 @@ import EditComment from "../EditComment";
 import { addToCollectionThunk } from "../../store/store";
 import { deleteFromCollectionThunk } from "../../store/store";
 
-// Purpose of this file is the same as normal post details, except exiting redirects you to the person's collection page that your currently viewing
+// Purpose of this file is the same as normal post details, except exiting redirects you to the search bar instead of the gallery page
 
-function CollectionPostDetails() {
+function ImageSearchPostDetails() {
 
     const { username, postId } = useParams()
     const history = useHistory()
@@ -67,9 +67,10 @@ function CollectionPostDetails() {
         if(doesUserHaveComment.length > 0) hasComment = true
     }
 
+
     return (
         <div id="post-details-main-container">
-                <p id="exit-button" onClick={() => history.push(`/${username}/gallery`)}>X</p>
+                <p id="exit-button" onClick={() => history.push(`/search`)}>X</p>
             <div id="post-details-image-container">
                 <img src={postDetails?.photoUrl} />
             </div>
@@ -108,4 +109,4 @@ function CollectionPostDetails() {
     )
 }
 
-export default CollectionPostDetails
+export default ImageSearchPostDetails

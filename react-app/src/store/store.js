@@ -14,6 +14,7 @@ const ADD_TO_COLLECTION = "store/ADD_TO_COLLECTION"
 const DELETE_FROM_COLLECTION = "store/DELETE_FROM_COLLECTION"
 
 const CREATE_JOURNAL = "store/CREATE_JOURNAL"
+const DELETE_JOURNAL = "store/DELETE_JOURNAL"
 
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
@@ -71,6 +72,11 @@ const deleteFromCollection = (collectionInfo) => ({
 const addJournal = (journalObj) => ({
     type: CREATE_JOURNAL,
     payload: journalObj
+})
+
+const deleteJournal = (journalId) => ({
+    type: DELETE_JOURNAL,
+    payload: journalId
 })
 
 
@@ -216,6 +222,16 @@ export const addJournalThunk = (formData) => async (dispatch) => {
 
 }
 
+export const deleteJournalThunk = (journalId) => async (dispatch) => {
+    const response = await fetch(`/api/journals/${journalId}`, {
+        method: "DELETE"
+    })
+
+    if(response.ok) {
+        dispatch(deleteJournal(journalId))
+    }
+}
+
 
 export default function reducer(state = initialState, action) {
 	switch (action.type) {
@@ -337,6 +353,16 @@ export default function reducer(state = initialState, action) {
             const newJournals = [journalObj, ...state.journals];
             const newState = { ...state, journals: newJournals };
             return newState;
+        }
+        case DELETE_JOURNAL: {
+            const journalId = action.payload
+            const newState = { ...state }
+
+            const journalArray = newState.journals
+            const indexToDelete = journalArray.findIndex((journal) => journal.id === Number(journalId))
+
+            journalArray.splice(indexToDelete, 1)
+            return newState
         }
 		default:
 			return state;

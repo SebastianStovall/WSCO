@@ -18,7 +18,7 @@ function ImageSearch({searchResults, store}) {
     return (
         <div className="brick-layered-grid-main-container">
             {queryResult?.map(filteredPhotos => {
-                return <div className="brick-grid-element" key={filteredPhotos.id} onClick={ () => history.push(`/${filteredPhotos.user.username}/gallery/${filteredPhotos.id}`)}>
+                return <div className="brick-grid-element" key={filteredPhotos.id} onClick={ () => history.push(`/${filteredPhotos.user.username}/image/${filteredPhotos.id}`)}>
                     <div className="grid-brick-img-container">
                         <img src={filteredPhotos.photoUrl} />
                     </div>
