@@ -13,6 +13,8 @@ const DELETE_COMMENT = "store/DELETE_COMMENT"
 const ADD_TO_COLLECTION = "store/ADD_TO_COLLECTION"
 const DELETE_FROM_COLLECTION = "store/DELETE_FROM_COLLECTION"
 
+const CREATE_JOURNAL = "store/CREATE_JOURNAL"
+
 // ACTION CREATORS
 const getAllStoreData = (users) => ({
     type: GET_STORE_DATA,
@@ -62,6 +64,13 @@ const addToCollection = (collectionInfo) => ({
 const deleteFromCollection = (collectionInfo) => ({
     type: DELETE_FROM_COLLECTION,
     payload: collectionInfo
+})
+
+// JOURNAL ACTIONS
+
+const addJournal = (journalObj) => ({
+    type: CREATE_JOURNAL,
+    payload: journalObj
 })
 
 
@@ -188,6 +197,20 @@ export const deleteFromCollectionThunk = (userId, postId) => async (dispatch) =>
 
     if(response.ok) {
         dispatch(deleteFromCollection({userId, postId}))
+    }
+
+}
+
+// JOURNAL THUNKS
+
+export const addJournalThunk = (formData) => async (dispatch) => {
+    const response = await fetch('/api/journals/new', {
+        method: "POST",
+        body: formData
+    })
+
+    if(response.ok) {
+        return "LOOKS GOOD"
     }
 
 }

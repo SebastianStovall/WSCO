@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
 import "./NewJournal.css"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { addJournalThunk } from "../../store/store"
 
 function NewJournal() {
+
+    const user = useSelector((state) => state.session.user)
 
     const dispatch = useDispatch()
     const [title, setTitle] = useState("")
@@ -12,13 +15,16 @@ function NewJournal() {
     const handleNewJournal = async(e) => {
         e.preventDefault()
 
-        const formData = {
-            title: title,
-            description: description,
-            photos: photos
+        const formData = new FormData();
+        for(let i = 0; i < photos.length; i++) {
+            formData.append(`photoUrl`, photos[i])
         }
 
-        // await dispatch(createNewJournalThunk(formData))
+        formData.append("title", title);
+        formData.append("description", description);
+        formData.append("userId", user.id);
+
+        await dispatch(addJournalThunk(formData))
 
     }
 
@@ -71,7 +77,7 @@ function NewJournal() {
 
                     <div className="product-button-container">
                         {/* REMOVE A Photo */}
-                        {photos.length > 3 && (
+                        {photos.length > 1 && (
                             <button
                                 className="add-delete-photo-buttons"
                                 type="button"
