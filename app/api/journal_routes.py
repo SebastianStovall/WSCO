@@ -97,3 +97,15 @@ def create_journal():
 
     journal_with_photos = Journal.query.get(new_journal_id)
     return journal_with_photos.to_dict()
+
+
+@journal_routes.route("/<int:journalId>", methods=["DELETE"])
+@login_required
+def delete_journal(journalId):
+
+    journalToDelete = Journal.query.get(journalId)
+
+    db.session.delete(journalToDelete)
+    db.session.commit()
+
+    return "successfully deleted", 200
