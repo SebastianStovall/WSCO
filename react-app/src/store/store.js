@@ -210,7 +210,8 @@ export const addJournalThunk = (formData) => async (dispatch) => {
     })
 
     if(response.ok) {
-        return "LOOKS GOOD"
+        const journalData = await response.json();
+        dispatch(addJournal(journalData))
     }
 
 }
@@ -329,6 +330,12 @@ export default function reducer(state = initialState, action) {
             const findCollectionIndex = newState.user[findUserIndex].collection.findIndex((collection) => collection.id === Number(postId))
             newState.user[findUserIndex].collection.splice(findCollectionIndex, 1)
 
+            return newState;
+        }
+        case CREATE_JOURNAL: {
+            const journalObj = action.payload;
+            const newJournals = [journalObj, ...state.journals];
+            const newState = { ...state, journals: newJournals };
             return newState;
         }
 		default:

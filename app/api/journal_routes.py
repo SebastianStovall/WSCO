@@ -96,5 +96,4 @@ def create_journal():
         return {"errors": photosForm.errors}
 
     journal_with_photos = Journal.query.get(new_journal_id)
-    print("THIS SHOULD HAVE ALL OF THE IMAGES WITH IT", journal_with_photos.to_dict())
-    return {"SUCCESS": "successfully created journal with images"}
+    return journal_with_photos.to_dict()

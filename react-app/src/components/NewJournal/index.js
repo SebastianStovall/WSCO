@@ -1,22 +1,26 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import "./NewJournal.css"
 import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
 import { addJournalThunk } from "../../store/store"
 
 function NewJournal() {
 
     const user = useSelector((state) => state.session.user)
-
     const dispatch = useDispatch()
+    const history = useHistory()
+
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [photos, setPhotos] = useState(["", "", ""]);
     const [formErrors, setFormErrors] = useState({})
     const [loading, setLoading] = useState(false);
-    const [userSubmitted, setUserSubmitted] = useState(false)
+    const [userSubmitted, setUserSubmitted] = useState(false);
 
     const handleNewJournal = async(e) => {
         e.preventDefault()
+
+        setUserSubmitted(true)
         const errors = {}
 
         if(!title) {
@@ -45,6 +49,7 @@ function NewJournal() {
 
         if(Object.keys(errors).length > 0) {
             setFormErrors(errors)
+            setUserSubmitted(false)
             return
         }
 
@@ -63,7 +68,7 @@ function NewJournal() {
         setLoading(false)
         setUserSubmitted(false)
 
-        // history.push here
+        history.push(`/${user.username}/gallery`)
 
     }
 
@@ -154,7 +159,7 @@ function NewJournal() {
 
 
                 </div>
-                <button type="submit" id="new-journal-create-button" disabled={userSubmitted} onClick={() => setUserSubmitted(true)}>Create Journal</button>
+                <button type="submit" id="new-journal-create-button" disabled={userSubmitted}>Create Journal</button>
                 {loading ? <p>Loading...</p> : ""}
             </form>
         </div>
