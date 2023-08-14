@@ -11,9 +11,42 @@ function NewJournal() {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [photos, setPhotos] = useState(["", "", ""]);
+    const [formErrors, setFormErrors] = useState({})
+    const [loading, setLoading] = useState(false);
+    const [userSubmitted, setUserSubmitted] = useState(false)
 
     const handleNewJournal = async(e) => {
         e.preventDefault()
+        const errors = {}
+
+        if(!title) {
+            errors.title = "Journal must have a title"
+        }
+        if(title.length > 50) {
+            errors.title = "title cannot exceed 50 characters"
+        }
+        if(description.length > 150) {
+            errors.description = "description cannot exceed 150 characters"
+        }
+        if(photos[0] === "" || photos[1] === "" || photos[2] === "") {
+            errors.photos = "Please supply at least 3 photos"
+        }
+
+        let fileExtCheck = true;
+        photos.forEach((photo) => {
+            if(photo) {
+                if(!photo.name.endsWith("jpeg") && !photo.name.endsWith("jpg") && !photo.name.endsWith("png")) fileExtCheck = false
+            }
+        })
+
+        if(!fileExtCheck) {
+            errors.file = ' Photos must end in either "jpg", "jpeg", or "png" '
+        }
+
+        if(Object.keys(errors).length > 0) {
+            setFormErrors(errors)
+            return
+        }
 
         const formData = new FormData();
         for(let i = 0; i < photos.length; i++) {
@@ -24,7 +57,13 @@ function NewJournal() {
         formData.append("description", description);
         formData.append("userId", user.id);
 
+        setLoading(true)
         await dispatch(addJournalThunk(formData))
+
+        setLoading(false)
+        setUserSubmitted(false)
+
+        // history.push here
 
     }
 
@@ -34,6 +73,7 @@ function NewJournal() {
                 <div id="new-journal-basic-info-section">
                     <h2>Basic Info</h2>
                     <div>
+                        {formErrors.title && <span className="errors">{formErrors.title}</span>}
                         <input
                             type="text"
                             placeholder="Journal Title"
@@ -41,7 +81,6 @@ function NewJournal() {
                             onChange={(e) => setTitle(e.target.value)}
                         />
                     </div>
-                    {/* {errors.title && <span className="errors">{errors.title[0]}</span>} */}
 
                     <div>
                         <input
@@ -51,12 +90,14 @@ function NewJournal() {
                             onChange={(e) => setDescription(e.target.value)}
                         />
                     </div>
-                    {/* {errors.description && <span className="errors">{errors.description[0]}</span>} */}
+                    {formErrors.description && <span className="errors">{formErrors.description}</span>}
                 </div>
 
                 <div id="new-journal-photos-section">
                     <h2>Attatch Photos</h2>
                     <p>Please provide at least 3 photos</p>
+                    {formErrors.photos && <span className="errors">{formErrors.photos}</span>}
+                    {formErrors.file && <span className="errors">{formErrors.file}</span>}
 
                     <div className="product-button-container">
                         {/* // ADD A Photo */}
@@ -113,7 +154,8 @@ function NewJournal() {
 
 
                 </div>
-                <button type="submit" id="new-journal-create-button">Create Journal</button>
+                <button type="submit" id="new-journal-create-button" disabled={userSubmitted} onClick={() => setUserSubmitted(true)}>Create Journal</button>
+                {loading ? <p>Loading...</p> : ""}
             </form>
         </div>
     )
