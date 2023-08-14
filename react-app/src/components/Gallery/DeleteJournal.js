@@ -1,10 +1,15 @@
 import { useModal } from "../../context/Modal";
+import { deleteJournalThunk } from "../../store/store";
+import { useDispatch } from "react-redux";
 
 function DeleteJournal({journalId}) {
 
+    const dispatch = useDispatch()
     const { closeModal } = useModal()
+    
     const handleDeleteJournal = async() => {
-        console.log("OMG YOU DELTED IT SADOHUIASIUDH")
+        await dispatch(deleteJournalThunk(journalId))
+        closeModal()
     }
 
     return(
