@@ -1,3 +1,18 @@
+#navbar {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  position: sticky;
+  top: 0;
+  background-color: #070707;
+  z-index: 100;
+}
+
+#navbar > div > a:hover {
+  color: rgb(212, 209, 209);
+}
+
+
 .profile-dropdown {
   width: 10vw;
   background-color: black;
@@ -8,12 +23,9 @@
   display: none;
 }
 
-
-#navbar {
-  display: flex;
-  justify-content: space-between;
-  height: 48px;
-  /* border: 2px solid green; */
+#main-navbar-buttons > a:last-child {
+  color: white;
+  font-weight: 700;
 }
 
 #main-navbar-buttons {
@@ -25,8 +37,10 @@
 }
 
 .WSCO {
-  font-size: 20px;
+  font-size: 23px;
   font-weight: bold;
+  color: white;
+  font-style: italic;
 }
 
 /* PROFILE DROPDOWN */
@@ -44,11 +58,11 @@
 }
 
 svg {
-  color: black;
+  color: white;
   fill: currentColor;
   position: absolute;
-  top: 4px;
-  right: 90px;
+  top: 15px;
+  right: 65px;
   width: 24px;
   height: 24px;
   padding: 10px;
@@ -57,12 +71,24 @@ svg {
 }
 
 .side-bar-scroll {
-  /* background-color: black; */
-  border: 1px solid red;
+  display: flex;
+  align-items: center;
   border-radius: none;
 }
 
-.fa-user-circle {
+.dropdown-button {
+  color: transparent;
+  background-color: transparent;
+}
+
+/* .fa-user-circle {
   border-radius: none;
   background-color: none;
+} */
+
+
+.two-lines {
+  border-bottom: 2px solid white;
+  padding-bottom: 6px;
+  width: 20px;
 }
