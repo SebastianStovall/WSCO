@@ -1,0 +1,246 @@
+/* BACKGROUND TO LOGO */
+
+
+#home-page-main-component {
+    width: 100%;
+    height: 100%;
+    background-image: url("https://assets-global.website-files.com/624de812dd74b622858823f2/64628a1c5ac4770b5ba3541e_vsco-pro-plan-homepage-background--opt.webp");
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+/* CHANGE WITH MEDIA QUERY */
+#logo-spacing-container {
+    padding-top: 100px;
+}
+
+#logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0px;
+}
+
+#logo-container > h2:first-child {
+    font-size: 48px;
+    background-color: #070707;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    color: white;
+    width: fit-content;
+    margin-top: 0px;
+    margin-right: 540px;
+    line-height: 1.2;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+#logo-container > h2:last-child {
+    font-size: 48px;
+    background-color: #edba58;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-right: 500px;
+    color: #000000;
+    margin-top: 0px;
+    padding-left: 60px;
+    font-style: italic;
+    /* CHANGE WITH MEDIA QUERY */
+    margin-bottom: 100px;
+}
+
+/* SUB LOGO TEXT */
+
+
+#sub-logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#sub-logo-container > h3 {
+    color: white;
+    font-size: 40px;
+    text-align: center;
+}
+
+
+
+#sub-logo-text-containers {
+    display: flex;
+    gap: 50px;
+}
+#sub-logo-text-containers > div > h4 {
+    color: white;
+    /* CHANGE WITH MEDIA QUERY */
+    font-size: 20px;
+}
+#sub-logo-text-containers > div > p {
+    color: rgb(243, 240, 240);
+}
+
+
+/* TRANSITION PHOTOS */
+
+#photos-container-transition {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    /* border: 1px solid red; */
+    /* CHANGE WITH MEDIA QUERY */
+    padding-top: 250px;
+    padding-bottom: 200px;
+}
+
+#photos-container-transition > img {
+    animation: floatUp 1s ease-in-out infinite alternate;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+#photos-container-transition > img:first-child {
+    height: 620px;
+    width: 440px;
+    position: relative;
+    z-index: 2;
+}
+
+#photos-container-transition > img:nth-child(2) {
+    height: 618px;
+    width: 320px;
+    position: relative;
+    right: 100px;
+    margin-top: 100px;
+}
+
+#photos-container-transition > img:last-child {
+    height: 410px;
+    width: 290px;
+    position: relative;
+    right: 20px;
+    bottom: 30px;
+}
+
+.fade-in {
+    opacity: 0; /* Initially hide */
+    transform: translateY(150px);
+    transition: opacity 0.5s
+}
+
+.fade-in.active {
+    opacity: 1;
+}
+
+
+
+/* CAROUSEL FOR DOWNLOAD APP */
+
+#hold-carosel {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 600px;
+    /* border: 4px solid purple; */
+    margin-bottom: 100px;
+}
+
+#carousel-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* border: 2px solid green; */
+}
+
+.carousel-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-ul li {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-ul li.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+#WSCO-mobile-container {
+    margin-right: 200px;
+    margin-top: 50px;
+}
+
+#WSCO-mobile-container > h3 {
+    font-size: 50px;
+    color: white;
+    margin: 0px;
+    margin-top: 20px;
+}
+
+#WSCO-mobile-container > p {
+    font-size: 20px;
+    color: white;
+    margin: 0px;
+    margin-top: 60px;
+    text-align: center;
+}
+
+#WSCO-mobile-container > img {
+    width: 40%;
+    height: 30%;
+    margin-top: 50px;
+    margin-left: 130px;
+}
+
+
+/* FOOTER */
+
+#footer-container {
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #070707;
+    height: 75px;
+    width: 100%;
+    gap: 10%;
+    border-top: 1px solid white;
+    margin-top: 30px;
+}
+
+#footer-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1em;
+    align-items: center;
+}
+
+#footer-title > h1 {
+    color: white;
+    font-style: italic;
+}
+
+#footer-info > h2,
+    ul,
+    li {
+    color: white;
+    list-style: none;
+}

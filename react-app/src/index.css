@@ -84,3 +84,16 @@ button {
     flex-direction: column;
     align-items: center;
 }
+
+
+#login-redirect-page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("https://images.pexels.com/photos/3876328/pexels-photo-3876328.jpeg?cs=srgb&dl=pexels-tomas-anunziata-3876328.jpg&fm=jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}

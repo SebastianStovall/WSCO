@@ -74,6 +74,7 @@ function NewJournal() {
 
     return(
         <div id="new-journal-main-container">
+            <p id="exit-button" onClick={() => history.push(`/${user?.username}/gallery`)}>X</p>
             <form id="new-journal-form" onSubmit={handleNewJournal}>
                 <div id="new-journal-basic-info-section">
                     <h2>Basic Info</h2>

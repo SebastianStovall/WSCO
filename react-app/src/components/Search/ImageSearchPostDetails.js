@@ -41,7 +41,16 @@ function ImageSearchPostDetails() {
     }
 
     // if you dont have necessary info to load this page, return null to re-render
-    if(!user || !allStoreData.posts.length) return null
+    if(!allStoreData.posts.length) return null
+
+    if(!user) {
+        return (
+            <div id="login-redirect-page-container">
+                <h2>Like what you see?</h2>
+                <p>Log in or Sign up to interact with community posts!</p>
+            </div>
+        )
+    }
 
     // find post details
     const postDetails = allStoreData?.posts.filter((post) => post.id === Number(postId))[0]
