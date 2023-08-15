@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 30px;
 }
 
 #account-nav-buttons-container {
@@ -79,6 +80,7 @@
     width: 100%;
     border: 1px solid #888888;
     flex-basis: 50%;
+    margin-bottom: 43vh;
 }
 
 #profile-img-container > img {

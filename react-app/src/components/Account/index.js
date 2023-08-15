@@ -94,6 +94,7 @@ function Account() {
 
 
     return (
+        <>
         <div id="account-main-container">
             <div id="account-nav-buttons-container">
                 <button>My Info</button>
@@ -200,9 +201,22 @@ function Account() {
                     <img src={user?.profileImgUrl} alt="profile-img" />
                 </div>
             </form>
-
-
         </div>
+
+        {/* <footer>
+                <div id='footer-container'>
+                    <div id='footer-title'>
+                        <h1>WSCO</h1>
+                    </div>
+                        <ul id="footer-list">
+                            <li>
+                                @2023 WSCO
+                            </li>
+                        </ul>
+                    </div>
+            </footer> */}
+
+        </>
     )
 }
 
