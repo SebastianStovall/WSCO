@@ -24,7 +24,7 @@
     margin-top: 7px;
 }
 
-#exit-button {
+.exit-button {
     position: absolute;
     left: 50px;
     top: 45px;

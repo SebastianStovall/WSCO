@@ -32,7 +32,7 @@
     font-size: 14px;
 }
 
-#exit-button {
+.exit-button {
     position: absolute;
     left: 150px;
     top: 129px;
