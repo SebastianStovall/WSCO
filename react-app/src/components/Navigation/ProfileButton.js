@@ -10,11 +10,15 @@ function ProfileButton({ user }) {
 
   // const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible2, setIsVisible2] = useState(false);
   const ulRef = useRef();
 
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
+    setIsVisible(!isVisible)
+    setIsVisible2(!isVisible2)
   };
 
   useEffect(() => {
@@ -22,7 +26,12 @@ function ProfileButton({ user }) {
 
     const closeMenu = (e) => {
       if (!ulRef.current.contains(e.target) || ulRef.current.contains(e.target)) {
-        setShowMenu(false);
+        setIsVisible2(!isVisible2);
+
+        setTimeout(() => {
+          setIsVisible(!isVisible)
+          setShowMenu(!showMenu)
+        }, 200);
       }
     };
 
@@ -36,23 +45,21 @@ function ProfileButton({ user }) {
     return dispatch(logout()).then(history.push("/"))
 };
 
-  const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
-  const closeMenu = () => setShowMenu(false);
+  const secondClassName = isVisible2 ? "profile-dropdown" : " profile-dropdown2"
 
   return (
     <div id="profile-dropdown-main-container">
       <button onClick={openMenu} className="dropdown-button">
-        <div className={!showMenu ? "" : " hidden"}>
+        <div className={!showMenu ? "" : " hidden2"}>
             <div className="two-lines"></div>
             <div className="two-lines"></div>
         </div>
-      <ul className={ulClassName} ref={ulRef}>
+      {isVisible ? <ul className={secondClassName} ref={ulRef}>
         {user ? (
           <div className="buttons-in-scroll-popup">
             <p id="exit-scoll-popup">X</p>
             <button onClick={() => history.push("/account")}>Account</button>
             <button onClick={handleLogout}>Log out</button>
-            {/* <button onClick={handleLogout}>Log Out</button> */}
           </div>
         ) : (
           <div className="buttons-in-scroll-popup">
@@ -61,7 +68,7 @@ function ProfileButton({ user }) {
             <button onClick={() => history.push("/signup")}>Sign Up</button>
           </div>
         )}
-      </ul>
+      </ul> : null}
       </button>
     </div>
   );

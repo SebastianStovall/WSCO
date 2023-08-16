@@ -60,20 +60,59 @@
 
 /* PROFILE DROPDOWN */
 
+.profile-dropdown-main-container {
+  padding: 0px 0px;
+  margin: 0px 0px;
+  width: 100px;
+}
+
 
 .profile-dropdown {
-  width: 250px;
+  width: 400px;
   background-color: black;
   height: 100vh;
   margin: 0px 0px;
   padding: 0px 0px;
   z-index: 4;
+}
 
+.profile-dropdown {
+  animation: slideLeft 0.4s ease-in-out;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(600px);
+  }
+  to {
+    transform: translateX(-10px);
+  }
 }
 
 
+.profile-dropdown2 {
+  animation: slideRight 0.4s ease-in-out;
+}
 
-.hidden {
+@keyframes slideRight {
+  from {
+    transform: translateX(-10px);
+  }
+  to {
+    transform: translateX(600px);
+  }
+}
+
+.profile-dropdown2 {
+  width: 300px;
+  background-color: black;
+  height: 100vh;
+  margin: 0px 0px;
+  padding: 0px 0px;
+  z-index: 4;
+}
+
+.hidden2 {
   display: none;
 }
 
