@@ -67,8 +67,11 @@ function ImageSearchPostDetails() {
     const userInfo = allStoreData?.user[userIndex]
     const userId = userInfo.id
 
+    // attach the user who liked the post from the store since store updates that slice of state, and not the session side
+    const userWhoLikedPost = allStoreData?.user?.find((user) => user?.id === user?.id)
+
     // see if the user has the post in their collection... will return -1 if NOT IN COLLECTION
-    const hasPostInCollection = user?.collection?.filter((likedPost) => likedPost.id === postDetails?.id)
+    const hasPostInCollection = userWhoLikedPost?.collection?.filter((likedPost) => likedPost.id === postDetails?.id)
 
     let hasComment = false
     if(user.id !== userId) {

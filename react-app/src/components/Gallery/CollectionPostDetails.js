@@ -67,8 +67,11 @@ function CollectionPostDetails() {
     const userInfo = allStoreData?.user[userIndex]
     const userId = userInfo.id
 
+    // attach the user who liked the post from the store since store updates that slice of state, and not the session side
+    const userWhoLikedPost = allStoreData?.user?.find((user) => user?.id === user?.id)
+
     // see if the user has the post in their collection... will return -1 if NOT IN COLLECTION
-    const hasPostInCollection = user?.collection?.filter((likedPost) => likedPost.id === postDetails?.id)
+    const hasPostInCollection = userWhoLikedPost?.collection?.filter((likedPost) => likedPost.id === postDetails?.id)
 
     let hasComment = false
     if(user.id !== userId) {
@@ -78,7 +81,7 @@ function CollectionPostDetails() {
 
     return (
         <div id="post-details-main-container">
-                <p id="exit-button" onClick={() => history.push(`/${username}/gallery`)}>X</p>
+                <p className="exit-button" onClick={() => history.push(`/${username}/gallery`)}>X</p>
             <div id="post-details-image-container">
                 <img src={postDetails?.photoUrl} />
             </div>

@@ -49,7 +49,7 @@ function EditPost() {
 
     return (
         <div id="edit-post-main-container">
-            <p id="exit-button" onClick={() => history.push(`/${user?.username}/gallery`)}>X</p>
+            <p className="exit-button" onClick={() => history.push(`/${user?.username}/gallery`)}>X</p>
             <h3>Studio</h3>
             <form encType="multipart/form-data" onSubmit={handleEditPost}>
                 <div id="upload-image-container">
