@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { logout } from "../../store/session";
+import { useDispatch } from "react-redux";
 
 function ProfileButton({ user }) {
 
+  const dispatch = useDispatch()
   const history = useHistory()
 
   // const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function ProfileButton({ user }) {
     if (!showMenu) return;
 
     const closeMenu = (e) => {
-      if (!ulRef.current.contains(e.target)) {
+      if (!ulRef.current.contains(e.target) || ulRef.current.contains(e.target)) {
         setShowMenu(false);
       }
     };
@@ -31,10 +31,10 @@ function ProfileButton({ user }) {
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
 
-  // const handleLogout = (e) => {
-  //   e.preventDefault();
-  //   dispatch(logout());
-  // };
+  const handleLogout = (e) => {
+    e.preventDefault();
+    return dispatch(logout()).then(history.push("/"))
+};
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
   const closeMenu = () => setShowMenu(false);
@@ -42,31 +42,24 @@ function ProfileButton({ user }) {
   return (
     <div id="profile-dropdown-main-container">
       <button onClick={openMenu} className="dropdown-button">
-        <div>
+        <div className={!showMenu ? "" : " hidden"}>
             <div className="two-lines"></div>
             <div className="two-lines"></div>
         </div>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
+          <div className="buttons-in-scroll-popup">
+            <p id="exit-scoll-popup">X</p>
             <button onClick={() => history.push("/account")}>Account</button>
+            <button onClick={handleLogout}>Log out</button>
             {/* <button onClick={handleLogout}>Log Out</button> */}
-          </>
+          </div>
         ) : (
-          <></>
-          // <>
-          //   <OpenModalButton
-          //     buttonText="Log In"
-          //     onItemClick={closeMenu}
-          //     modalComponent={<LoginFormModal />}
-          //   />
-
-          //   <OpenModalButton
-          //     buttonText="Sign Up"
-          //     onItemClick={closeMenu}
-          //     modalComponent={<SignupFormModal />}
-          //   />
-          // </>
+          <div className="buttons-in-scroll-popup">
+            <p id="exit-scoll-popup">X</p>
+            <button onClick={() => history.push("/login")}>Log In</button>
+            <button onClick={() => history.push("/signup")}>Sign Up</button>
+          </div>
         )}
       </ul>
       </button>
