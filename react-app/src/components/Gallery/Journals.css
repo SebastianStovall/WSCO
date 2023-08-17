@@ -4,6 +4,14 @@
     margin-top: 100px;
 }
 
+#journal-cover-grid-container-single {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    align-items: center;
+    justify-items: center;
+    gap: 30px;
+}
+
 #journal-cover-grid-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

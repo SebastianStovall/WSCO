@@ -14,6 +14,7 @@ function Navigation({ isLoaded }){
 				<NavLink exact to="/" className="WSCO">WSCO</NavLink>
 				{sessionUser ? <NavLink exact to={`/${sessionUser.username}/gallery`} className="profile-signed-in">Profile</NavLink>
 				: <NavLink exact to="/login" className="profile-signed-out">Sign In</NavLink>}
+				<NavLink exact to="/discover">Discover</NavLink>
 			</div>
 			{isLoaded && (
 				<div id='search-bar-user-dropdown-container'>

@@ -15,7 +15,7 @@
 }
 
 
-#main-navbar-buttons > a:last-child.profile-signed-in {
+#main-navbar-buttons > a:nth-child(2).profile-signed-in {
   color: white;
   font-weight: 700;
   background-color: rgb(45, 45, 209);
@@ -28,7 +28,7 @@
     line-height: 1.33;
 }
 
-#main-navbar-buttons > a:last-child.profile-signed-out {
+#main-navbar-buttons > a:nth-child(2).profile-signed-out {
   color: black;
   font-weight: 700;
   background-color: #edba58;
@@ -36,6 +36,17 @@
   border-radius: 999px;
     align-items: center;
     padding: 8px 25px;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.33;
+}
+
+#main-navbar-buttons > a:last-child {
+  color: white;
+  font-weight: 700;
+  /* padding: 10px; */
+  border-radius: 999px;
+    align-items: center;
     font-size: 15px;
     font-weight: 500;
     line-height: 1.33;
