@@ -2,7 +2,6 @@ import { useHistory } from "react-router-dom"
 import { logout } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { authenticate } from "../../store/session";
 import { updateUser } from "../../store/session";
 import { updateUserPassword } from "../../store/session";
 import "./Account.css"
@@ -17,8 +16,9 @@ function Account() {
     const [lastName, setLastName] = useState("")
     const [email, setEmail] = useState("")
     const [username, setUsername] = useState("")
-    const [profileImgUrl, setProfileImgUrl] = useState("")
+    const [image, setImage] = useState(null);
     const [profileBio, setProfileBio] = useState("")
+    const [changeProfilePic, setChangeProfilePic] = useState(false)
 
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -26,20 +26,14 @@ function Account() {
     const [formErrors, setFormErrors] = useState({})
 
     useEffect(() => {
-        dispatch(authenticate())
 
-        if (user === null) return
-        else {
-            setEmail(user.email)
-            setFirstName(user.firstName)
-            setLastName(user.lastName)
-            setUsername(user.username)
+        setEmail(user.email);
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+        setUsername(user.username);
+        setProfileBio(user.profileBio);
 
-            setProfileBio(user.profileBio)
-            setProfileImgUrl(user.profileImgUrl)
-        }
-
-    }, [dispatch])
+    }, [dispatch, user])
 
     const handleLogout = (e) => {
         e.preventDefault();
@@ -49,16 +43,45 @@ function Account() {
     const handleUpdateInfo = async (e) => {
         e.preventDefault();
 
-        const userInfo = {
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            username: username,
-            profileImgUrl: profileImgUrl,
-            profileBio: profileBio
+        const errors = {}
+
+        if(changeProfilePic) {
+
+            if(image === null) {
+                errors.file = "please select a profile image"
+                setFormErrors(errors)
+                return
+            }
+
+            let fileExtCheck = true;
+            if(!image.name.endsWith("jpeg") && !image.name.endsWith("jpg") && !image.name.endsWith("png")) fileExtCheck = false
+            if(!fileExtCheck) {
+                errors.file = 'Photos must end in either "jpg", "jpeg", or "png" '
+            }
+            if(Object.keys(errors).length > 0) {
+                setFormErrors(errors)
+                return
+            }
         }
 
-        const response = await dispatch(updateUser(userInfo))
+        const formData = new FormData();
+
+        if(changeProfilePic) {
+            formData.append("firstName", firstName);
+            formData.append("lastName", lastName);
+            formData.append("email", email);
+            formData.append("username", username);
+            formData.append("profileImgUrl", image);
+            formData.append("profileBio", profileBio);
+        } else {
+            formData.append("firstName", firstName);
+            formData.append("lastName", lastName);
+            formData.append("email", email);
+            formData.append("username", username);
+            formData.append("profileBio", profileBio);
+        }
+
+        const response = await dispatch(updateUser(formData))
 
         if (response.errors) {
             const errors = response.errors // main backend errors
@@ -92,7 +115,6 @@ function Account() {
     }
 
 
-
     return (
         <div id="account-main-container">
             <div id="account-nav-buttons-container">
@@ -100,8 +122,8 @@ function Account() {
                 <button onClick={handleLogout}>Log Out</button>
             </div>
 
-            <form>
-                <p className="center-p">Profile</p>
+            <form encType="multipart/form-data" onSubmit={handleUpdateInfo}>
+                {/* <p className="center-p">Profile</p> */}
                 <div className="profle-form-section-container">
                     <div>
                         <label>First Name</label>
@@ -159,17 +181,20 @@ function Account() {
                         onChange={(e) => setProfileBio(e.target.value)}
                         />
                     </div>
-                    <div>
+                        <button type="button" onClick={() => setChangeProfilePic(true)} className={changeProfilePic ? "change-profile-pic-button-hidden" : "change-profile-pic-button"}>Change Picture</button>
+                    {changeProfilePic ? (<div>
                         <label>Profile Picture</label>
-                    <input
-                        id="username"
-                        type="text"
-                        value={profileImgUrl}
-                        onChange={(e) => setProfileImgUrl(e.target.value)}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => {
+                                setImage(e.target.files[0]);
+                            }}
                         />
-                    </div>
+                    {formErrors.file && <span className="errors">{formErrors.file}</span>}
+                    </div> ) : null}
                 </div>
-                <button type="submit" className="account-details-form-button" onClick={handleUpdateInfo}>Save Changes</button>
+                <button type="submit" className="account-details-form-button">Save Changes</button>
             </form>
 
             <form id="password-edit-form">
@@ -198,6 +223,7 @@ function Account() {
                 </div>
                 <div id="profile-img-container">
                     <img src={user?.profileImgUrl} alt="profile-img" />
+                    <p>Current Profile Picture</p>
                 </div>
             </form>
         </div>

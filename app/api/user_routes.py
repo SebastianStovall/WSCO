@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import User, db
 from app.forms import ManageForm, ManageFormPassword
+from app.api.aws_helpers import upload_file_to_s3, get_unique_filename
 
 user_routes = Blueprint('users', __name__)
 
@@ -29,18 +30,40 @@ def manage_account():
     form["csrf_token"].data = request.cookies["csrf_token"]
 
     if form.validate_on_submit():
-        # YOU NEED TO USE DOT NOTATION, OTHERWISE YOU GET A TYPE ERROR: "USER" OBJECT NOT SUBSCRIPTABLE
-        user.email = form.data["email"]
-        user.firstName = form.data["firstName"]
-        user.lastName = form.data["lastName"]
-        user.username = form.data["username"]
-        user.profileBio = form.data["profileBio"]
-        user.profileImgUrl = form.data["profileImgUrl"]
 
-        db.session.commit()
-        return user.to_dict()
+        photo = form.data["profileImgUrl"]
+        if photo is not None:
+            photo.filename = get_unique_filename(photo.filename)
+            upload = upload_file_to_s3(photo)
+
+            if "url" not in upload:
+                return jsonify(upload), 400
+
+            url = upload["url"]
+
+            user.email = form.data["email"]
+            user.firstName = form.data["firstName"]
+            user.lastName = form.data["lastName"]
+            user.username = form.data["username"]
+            user.profileBio = form.data["profileBio"]
+            user.profileImgUrl = url
+
+            db.session.commit()
+            return user.to_dict()
+
+        else:
+
+            user.email = form.data["email"]
+            user.firstName = form.data["firstName"]
+            user.lastName = form.data["lastName"]
+            user.username = form.data["username"]
+            user.profileBio = form.data["profileBio"]
+
+            db.session.commit()
+            return user.to_dict()
 
     else:
+        print({"errors": form.errors})
         return { "errors": form.errors }
 
 
