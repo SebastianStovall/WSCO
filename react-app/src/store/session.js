@@ -120,16 +120,17 @@ export const signUp = (username, email, password) => async (dispatch) => {
 export const updateUser = (formData) => async (dispatch) => {
 	const response = await fetch("/api/users/account", {
 		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(formData)
+		body: formData
 	})
 
 	if(response.ok) {
 		const thunkResponse = await response.json()
-		dispatch(editUser(thunkResponse))
-		return thunkResponse
+		if (Object.values(thunkResponse).length > 0) {
+			return thunkResponse
+		} else {
+			dispatch(editUser(thunkResponse))
+			return thunkResponse
+		}
 	}
 }
 
@@ -144,7 +145,6 @@ export const updateUserPassword = (formData) => async (dispatch) => {
 
 	if(response.ok) {
 		const thunkResponse = await response.json()
-		console.log("RESPONSE FORM THUNK", thunkResponse)
 		dispatch(editUserPassword(thunkResponse))
 		return thunkResponse
 	}

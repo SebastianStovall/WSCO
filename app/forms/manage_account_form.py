@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, EmailField
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms.validators import DataRequired, Email, ValidationError
 from app.models import User
 from flask_login import current_user
+from app.api.aws_helpers import ALLOWED_EXTENSIONS
 
 
 def user_exists(form, field):
@@ -45,26 +47,29 @@ def password_length(form, field):
 
 def firstName_length(form, field):
     firstName = field.data
-    if len(firstName) > 30:
-        raise ValidationError("First name cannot exceed 30 characters")
+    if firstName != None:
+        if len(firstName) > 30:
+            raise ValidationError("First name cannot exceed 30 characters")
 
 def lastName_length(form, field):
     lastName = field.data
-    if len(lastName) > 30:
-        raise ValidationError("Last name cannot exceed 30 characters")
+    if lastName != None:
+        if len(lastName) > 30:
+            raise ValidationError("Last name cannot exceed 30 characters")
 
 def bio_length(form, field):
     profileBio = field.data
-    if len(profileBio) > 100:
-        raise ValidationError("Bio cannot exceed 100 characters")
+    if profileBio != None:
+        if len(profileBio) > 100:
+            raise ValidationError("Bio cannot exceed 100 characters")
 
 
 class ManageForm(FlaskForm):
     email = EmailField('email', validators=[DataRequired(), user_exists, email_ending, email_contains_at_symbol])
-    firstName = StringField('firstName', validators=[DataRequired(), firstName_length])
-    lastName = StringField('lastName', validators=[DataRequired(), lastName_length])
+    firstName = StringField('firstName', validators=[firstName_length])
+    lastName = StringField('lastName', validators=[lastName_length])
     username = StringField('username', validators=[DataRequired(), username_exists, username_length])
-    profileImgUrl = StringField("profileImgUrl")
+    profileImgUrl = FileField("Image File", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     profileBio = StringField("profileBio", validators=[bio_length])
 
 class ManageFormPassword(FlaskForm):

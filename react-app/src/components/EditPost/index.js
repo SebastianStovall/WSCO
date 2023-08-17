@@ -21,6 +21,7 @@ function EditPost() {
 
     useEffect(() => {
         if (postDetails) {
+            console.log("ASDASDASDASDASDASDASD", postDetails.photoUrl)
             setImage(postDetails.photoUrl);
             setImageUrl(postDetails.photoUrl)
             setCaption(postDetails.caption);
