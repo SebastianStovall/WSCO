@@ -14,7 +14,7 @@ function Journals({store, currUser}) {
 
     return (
         <div id="journal-component-main-container">
-            <div id="journal-cover-grid-container">
+            <div id={allUserJournals.length === 1 ? "journal-cover-grid-container-single" : "journal-cover-grid-container"}>
                 {allUserJournals.map((journal) => {
                     return <div key={journal.id} id="journal-cover-grid-component">
                         <img src={journal.photos[0].photoUrl} width={620} height={414.36} onClick={() => history.push(`/${currUser.username}/journals/${journal.id}`)}/>
