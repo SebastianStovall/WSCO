@@ -191,8 +191,8 @@ function Account() {
                                 setImage(e.target.files[0]);
                             }}
                         />
-                    </div> ) : null}
                     {formErrors.file && <span className="errors">{formErrors.file}</span>}
+                    </div> ) : null}
                 </div>
                 <button type="submit" className="account-details-form-button">Save Changes</button>
             </form>
