@@ -16,14 +16,14 @@ function EditPost() {
     const [imageUrl, setImageUrl] = useState(null);
     const [caption, setCaption] = useState("")
     const [formErrors, setFormErrors] = useState({})
+    const [newPhoto, setNewPhoto] = useState(false)
 
     const postDetails = allStoreData.posts.filter((post) => post.id === Number(postId))[0]
 
     useEffect(() => {
         if (postDetails) {
-            console.log("ASDASDASDASDASDASDASD", postDetails.photoUrl)
-            setImage(postDetails.photoUrl);
-            setImageUrl(postDetails.photoUrl)
+            // setImage(postDetails.photoUrl);
+            setImageUrl(postDetails.photoUrl);
             setCaption(postDetails.caption);
         }
     }, [postDetails]);
@@ -31,11 +31,31 @@ function EditPost() {
     const handleEditPost = async(e) => {
         e.preventDefault()
 
-        const formData = new FormData();
-        formData.append("photoUrl", image);
-        formData.append("caption", caption);
+        console.log("THIS IS THE IMAGE", image)
+        const errors = {}
+        if(newPhoto) {
+            if(image === null) {
+                errors.photoUrl = "Must attach a new image for this post"
+                setFormErrors(errors)
+                return
+            }
+            let fileExtCheck = true;
+            if(!image.name.endsWith("jpeg") && !image.name.endsWith("jpg") && !image.name.endsWith("png")) fileExtCheck = false
 
-        setImageUrl(URL.createObjectURL(image)); // Set temporary image URL
+            if(!fileExtCheck) {
+            errors.photoUrl = 'Image must end in either "jpg", "jpeg", or "png"'
+            }
+        }
+
+        const formData = new FormData();
+
+        if(newPhoto) {
+            setImageUrl(URL.createObjectURL(image)); // Set temporary image URL
+            formData.append("photoUrl", image);
+            formData.append("caption", caption);
+        } else {
+            formData.append("caption", caption);
+        }
 
         const response = await dispatch(editPostThunk(postId, formData))
         if(response.errors) {
@@ -57,7 +77,8 @@ function EditPost() {
                     {imageUrl ? <img src={imageUrl} alt="Selected" />
                     : <img src="https://filetandvine.com/wp-content/uploads/2015/10/pix-vertical-placeholder.jpg" alt="img-placeholder"/>}
                 </div>
-                <div id="file-upload-container">
+                <button type="button" onClick={() => {setNewPhoto(true); setImageUrl(null)}} className={ !newPhoto ? "swap-photo-button" : "swap-photo-button-hide"}>Change Photo</button>
+                {newPhoto ? <div id="file-upload-container">
                     <input
                         type="file"
                         accept="image/*"
@@ -65,14 +86,14 @@ function EditPost() {
                             setImage(e.target.files[0]);
                             setImageUrl(URL.createObjectURL(e.target.files[0])); // Update temporary image URL
                         }}
-                    />
-                    {formErrors.photoUrl && <span className='errors'>{formErrors.photoUrl}</span>}
-                </div>
+                        />
+                </div> : null}
+                        {formErrors.photoUrl && <span className='errors'>{formErrors.photoUrl}</span>}
                 <div id="edit-post-caption-container">
                     <textarea
                         id="new_photo_caption"
                         type="text"
-                        placeholder="caption"
+                        placeholder="caption (optional)"
                         value={caption}
                         onChange={(e) => setCaption(e.target.value)}
                     />

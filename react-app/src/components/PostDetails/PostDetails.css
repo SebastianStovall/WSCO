@@ -60,6 +60,7 @@
 #post-details-post-info-container > p:first-child {
     cursor: pointer;
     margin: 0px;
+    width: fit-content;
 }
 
 #limit-caption-container {
