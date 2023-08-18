@@ -70,3 +70,10 @@ div#gallery-options-container {
     background-color: transparent;
     color: black;
 }
+
+
+
+#new-user-message {
+    margin-top: 50px;
+    font-style: italic;
+}

@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory } from "react-router-dom";
 import { signUp } from "../../store/session";
 import './SignupForm.css';
+import { getAllStoreDataThunk } from "../../store/store";
 
 function SignupFormPage() {
   const dispatch = useDispatch();
   const history = useHistory()
 
   const sessionUser = useSelector((state) => state.session.user);
+  const allStore = useSelector((store) => store.store)
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -19,19 +21,13 @@ function SignupFormPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (password === confirmPassword) {
-    //     const data = await dispatch(signUp(username, email, password));
-    //     if (data) {
-    //       setErrors(data)
-    //     }
-    // } else {
-    //     setErrors(['Confirm Password field must be the same as the Password field']);
-    // }
 
     const data = await dispatch(signUp(username, email, password));
     if (data) { // returns null if fine, so will not excecute
       setErrors(data)
       console.log(errors)
+    } else {
+      await dispatch(getAllStoreDataThunk())
     }
 
   };

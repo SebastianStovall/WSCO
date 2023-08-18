@@ -40,3 +40,16 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+.swap-photo-button {
+    margin-top: 10px;
+    margin-left: 20px;
+    border-radius: 0px;
+    width: 150px;
+    padding: 0px 0px;
+    height: 35px;
+}
+
+.swap-photo-button-hide {
+    display: none;
+}
