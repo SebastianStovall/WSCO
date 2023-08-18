@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { updateUser } from "../../store/session";
 import { updateUserPassword } from "../../store/session";
 import "./Account.css"
+import { getAllStoreDataThunk } from "../../store/store";
 
 
 function Account() {
@@ -87,6 +88,7 @@ function Account() {
             const errors = response.errors // main backend errors
             setFormErrors(errors)
         } else {
+            await dispatch(getAllStoreDataThunk())
             history.push(`/`)
         }
 

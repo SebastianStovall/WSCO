@@ -125,12 +125,12 @@ export const updateUser = (formData) => async (dispatch) => {
 
 	if(response.ok) {
 		const thunkResponse = await response.json()
-		if (Object.values(thunkResponse).length > 0) {
-			return thunkResponse
-		} else {
-			dispatch(editUser(thunkResponse))
-			return thunkResponse
-		}
+			if (thunkResponse.errors === undefined) {
+				dispatch(editUser(thunkResponse))
+				return thunkResponse
+			} else {
+				return thunkResponse
+			}
 	}
 }
 
