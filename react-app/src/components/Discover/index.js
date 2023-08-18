@@ -16,16 +16,14 @@ function Discover() {
             }
             fetchData()
         }
-    }, [dispatch, allStoreData]);
-
-    console.log("LOOK HERE DOG", allStoreData)
+    }, []);
 
     return (
         <div className="grid-container-main">
             {allStoreData?.user?.map(profile => {
                 return <div className="grid-element" onClick={() => history.push(`/${profile.username}/gallery`)}>
                     <div className="grid-profile-img-container">
-                        {profile.profileImgUrl ? <img src={profile.profileImgUrl} /> : <img src="https://instasize.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fmunkee%2Fimage%2Fupload%2Fv1675319854%2Finstasize-website%2Flearn%2Fvsco-logo.webp&w=3840&q=75" />}
+                        {profile.profileImgUrl ? <img src={profile.profileImgUrl} /> : <img src="https://rassets.vsco.co/avatars/avatar-other.png?c=1&d=1&w=300" />}
                     </div>
                     <div>
                         <p>{profile.username}</p>

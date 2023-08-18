@@ -54,13 +54,13 @@ function NewPost() {
                             setImageUrl(URL.createObjectURL(e.target.files[0])); // Update temporary image URL
                         }}
                     />
-                    {formErrors.photoUrl && <span className='errors'>{formErrors.photoUrl}</span>}
                 </div>
+                    {formErrors.photoUrl && <span className='errors'>{formErrors.photoUrl}</span>}
                 <div id="create-post-caption-container">
                     <textarea
                         id="new_photo_caption"
                         type="text"
-                        placeholder="caption"
+                        placeholder="caption (optional)"
                         value={caption}
                         onChange={(e) => setCaption(e.target.value)}
                     />

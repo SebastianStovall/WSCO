@@ -58,6 +58,7 @@ function ProfileButton({ user }) {
         {user ? (
           <div className="buttons-in-scroll-popup">
             <p id="exit-scoll-popup">X</p>
+            <button onClick={() => history.push("/")}>Home</button>
             <button onClick={() => history.push("/account")}>Account</button>
             <button onClick={handleLogout}>Log out</button>
           </div>
