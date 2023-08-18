@@ -68,7 +68,7 @@ function CollectionPostDetails() {
     const userId = userInfo.id
 
     // attach the user who liked the post from the store since store updates that slice of state, and not the session side
-    const userWhoLikedPost = allStoreData?.user?.find((user) => user?.id === user?.id)
+    const userWhoLikedPost = allStoreData?.user?.find((currUser) => currUser?.id === user?.id)
 
     // see if the user has the post in their collection... will return -1 if NOT IN COLLECTION
     const hasPostInCollection = userWhoLikedPost?.collection?.filter((likedPost) => likedPost.id === postDetails?.id)
