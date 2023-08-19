@@ -17,6 +17,7 @@ import JournalDetails from "./components/JournalDetails";
 import NewJournal from "./components/NewJournal";
 import ImageSearchPostDetails from "./components/Search/ImageSearchPostDetails";
 import Discover from "./components/Discover";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ function App() {
             <NewPost />
           </Route>
           <Route exact path="*">
-            <h2>"An error occurred"</h2>
+            <PageNotFound />
           </Route>
         </Switch>
       )}

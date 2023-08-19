@@ -44,8 +44,16 @@ function EditPost() {
 
             if(!fileExtCheck) {
             errors.photoUrl = 'Image must end in either "jpg", "jpeg", or "png"'
+            setFormErrors(errors)
+            return
             }
         }
+
+        if (!caption.replace(/\s/g, '').length && caption.length !== 0) {
+            errors.caption = 'caption can not contain only whitespace (ie. spaces, tabs or line breaks)'
+            setFormErrors(errors)
+            return
+            }
 
         const formData = new FormData();
 

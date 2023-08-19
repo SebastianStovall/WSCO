@@ -29,8 +29,14 @@ function NewJournal() {
         if(title.length > 50) {
             errors.title = "title cannot exceed 50 characters"
         }
+        if (!title.replace(/\s/g, '').length && title.length !== 0) {
+            errors.title2 = 'title can not contain only whitespace (ie. spaces, tabs or line breaks)'
+        }
         if(description.length > 150) {
             errors.description = "description cannot exceed 150 characters"
+        }
+        if (!description.replace(/\s/g, '').length && description.length !== 0) {
+            errors.description2 = 'description can not contain only whitespace (ie. spaces, tabs or line breaks)'
         }
         if(photos[0] === "" || photos[1] === "" || photos[2] === "") {
             errors.photos = "Please supply at least 3 photos"
@@ -80,6 +86,7 @@ function NewJournal() {
                     <h2>Basic Info</h2>
                     <div>
                         {formErrors.title && <span className="errors">{formErrors.title}</span>}
+                        {formErrors.title2 && <span className="errors">{formErrors.title2}</span>}
                         <input
                             type="text"
                             placeholder="Journal Title"
@@ -97,6 +104,7 @@ function NewJournal() {
                         />
                     </div>
                     {formErrors.description && <span className="errors">{formErrors.description}</span>}
+                    {formErrors.description2 && <span className="errors">{formErrors.description2}</span>}
                 </div>
 
                 <div id="new-journal-photos-section">
