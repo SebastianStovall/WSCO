@@ -54,7 +54,7 @@ function Gallery() {
                     <button className={`gallery-button-view ${view === "collection" ? 'active' : ''}`} onClick={() => handleView("collection")}>Collection</button>
                 </div>
                 {view === "gallery" ? <div id="new-user-message">
-                    <h2>Posts coming soon!</h2>
+                    <h2>No Posts yet!</h2>
                 </div> : null}
                 {view === "journals" && <Journals store={allStoreData} currUser={user} />}
                 {view === "collection" && <Collection store={allStoreData} currUser={user} />}

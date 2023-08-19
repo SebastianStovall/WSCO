@@ -17,6 +17,13 @@ function NewPost() {
     const handleCreatePost = async(e) => {
         e.preventDefault()
 
+        const errors = {}
+        if (!caption.replace(/\s/g, '').length && caption.length !== 0) {
+            errors.caption = 'caption can not contain only whitespace (ie. spaces, tabs or line breaks)'
+            setFormErrors(errors)
+            return
+            }
+
         const formData = new FormData();
         formData.append("photoUrl", image);
         formData.append("caption", caption)

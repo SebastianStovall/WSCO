@@ -224,7 +224,7 @@ function Account() {
                     </div>
                 </div>
                 <div id="profile-img-container">
-                    <img src={user?.profileImgUrl} alt="profile-img" />
+                    {user?.profileImgUrl ? <img src={user?.profileImgUrl} alt="profile-img" /> : <img src="https://rassets.vsco.co/avatars/avatar-other.png?c=1&d=1&w=300" />}
                     <p>Current Profile Picture</p>
                 </div>
             </form>
