@@ -82,7 +82,7 @@ function ImageSearchPostDetails() {
 
     return (
         <div id="post-details-main-container">
-                <p id="exit-button" onClick={() => history.push(`/search`)}>X</p>
+                <p className="exit-button" onClick={() => history.push(`/search`)}>X</p>
             <div id="post-details-image-container">
                 <img src={postDetails?.photoUrl} />
             </div>
