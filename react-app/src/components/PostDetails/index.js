@@ -111,7 +111,7 @@ function PostDetails() {
                     return <div id="single-comment-component" key={comment.id}>
                         <div>
                             <div id="comment-profile-img-container">
-                                {comment.user.profileImgUrl ? <img src={comment.user.profileImgUrl} />
+                                {comment.user.profileImgUrl ? <img src={comment.user.profileImgUrl} onClick={() => history.push(`/${comment?.user?.username}/gallery`)} />
                                 : <img src="https://rassets.vsco.co/avatars/avatar-other.png?c=1&d=1&w=300" />}
                             </div>
                             <div id="inner-comment-content">
