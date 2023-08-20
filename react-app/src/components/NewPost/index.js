@@ -17,6 +17,8 @@ function NewPost() {
     const handleCreatePost = async(e) => {
         e.preventDefault()
 
+        if(image !== null) setImageUrl(URL.createObjectURL(image)); // Set temporary image URL
+
         const errors = {}
         if (!caption.replace(/\s/g, '').length && caption.length !== 0) {
             errors.caption = 'caption can not contain only whitespace (ie. spaces, tabs or line breaks)'
@@ -28,7 +30,6 @@ function NewPost() {
         formData.append("photoUrl", image);
         formData.append("caption", caption)
 
-        setImageUrl(URL.createObjectURL(image)); // Set temporary image URL
 
         const response = await dispatch(createNewPostThunk(formData))
         if(response.errors) {
