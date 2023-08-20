@@ -20,6 +20,11 @@ function NewJournal() {
     const handleNewJournal = async(e) => {
         e.preventDefault()
 
+        let photoCount = 0
+        for(let i = 0; i < photos.length; i++) {
+            if (photos[i] !== "") photoCount++
+        }
+
         setUserSubmitted(true)
         const errors = {}
 
@@ -38,14 +43,15 @@ function NewJournal() {
         if (!description.replace(/\s/g, '').length && description.length !== 0) {
             errors.description2 = 'description can not contain only whitespace (ie. spaces, tabs or line breaks)'
         }
-        if(photos[0] === "" || photos[1] === "" || photos[2] === "") {
-            errors.photos = "Please supply at least 3 photos"
+        if(photoCount < 3) {
+            errors.photos = "Please provide at least 3 photos"
         }
 
         let fileExtCheck = true;
         photos.forEach((photo) => {
             if(photo) {
-                if(!photo.name.endsWith("jpeg") && !photo.name.endsWith("jpg") && !photo.name.endsWith("png")) fileExtCheck = false
+                const lowerCaseName = photo.name.toLowerCase();
+                if(!lowerCaseName.endsWith("jpeg") && !lowerCaseName.endsWith("jpg") && !lowerCaseName.endsWith("png")) fileExtCheck = false
             }
         })
 
@@ -80,7 +86,7 @@ function NewJournal() {
 
     return(
         <div id="new-journal-main-container">
-            <p id="exit-button" onClick={() => history.push(`/${user?.username}/gallery`)}>X</p>
+            <p id="exit-button-journal" onClick={() => history.push(`/${user?.username}/gallery`)}>X</p>
             <form id="new-journal-form" onSubmit={handleNewJournal}>
                 <div id="new-journal-basic-info-section">
                     <h2>Basic Info</h2>
@@ -132,7 +138,7 @@ function NewJournal() {
 
                     <div className="product-button-container">
                         {/* REMOVE A Photo */}
-                        {photos.length > 1 && (
+                        {photos.length > 3 && (
                             <button
                                 className="add-delete-photo-buttons"
                                 type="button"
