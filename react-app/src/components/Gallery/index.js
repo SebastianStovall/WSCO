@@ -37,12 +37,12 @@ function Gallery() {
     if(userPosts?.length === 0) {
         return (
             <div id="gallery-profile-container">
-                {loggedInUser?.profileImgUrl ? <img src={loggedInUser?.profileImgUrl} />
+                {user?.profileImgUrl ? <img src={user?.profileImgUrl} />
                 : <img src="https://rassets.vsco.co/avatars/avatar-other.png?c=1&d=1&w=300" /> }
                 <div>
-                    <p>{loggedInUser?.username}</p>
-                    <p className="profile-bio-text">{loggedInUser?.profileBio}</p>
-                    {loggedInUser?.id === loggedInUser?.id && view === "gallery" ?
+                    <p>{user?.username}</p>
+                    <p className="profile-bio-text">{user?.profileBio}</p>
+                    {user?.id === loggedInUser?.id && view === "gallery" ?
                     <button id="create-post-gallery-button" onClick={() => history.push(`/${user?.username}/new`)}>New Post</button> : ""}
 
                     {user?.id === loggedInUser?.id && view === "journals" ?

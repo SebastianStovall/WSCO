@@ -14,8 +14,9 @@ def user_exists(form, field):
 
 def email_ending(form, field):
     email = field.data
-    if not email.lower().endswith('.com'):
-        raise ValidationError('Email must end with .com')
+    valid_tlds = ['.com', '.net', '.org', '.edu', '.gov', '.io']
+    if not any(email.endswith(tld) for tld in valid_tlds):
+        raise ValidationError('Email must end with .com, .net, .org, .edu, .gov, or .io')
 
 def email_contains_at_symbol(form, field):
     email = field.data
