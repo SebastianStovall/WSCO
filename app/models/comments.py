@@ -10,6 +10,7 @@ class Comment(db.Model):
     comment = db.Column(db.String(255), nullable=False)
     userId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
     postId = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("posts.id")))
+    createdAt = db.Column(db.DateTime, default=db.func.now())
 
     user_comments = db.relationship("User", back_populates="comments")
 
@@ -18,5 +19,6 @@ class Comment(db.Model):
             'id': self.id,
             'comment': self.comment,
             'userId': self.userId,
-            'postId': self.postId
+            'postId': self.postId,
+            'createdAt': self.createdAt
         }
