@@ -10,6 +10,21 @@ import { addToCollectionThunk } from "../../store/store";
 import { deleteFromCollectionThunk } from "../../store/store";
 import "./PostDetails.css"
 
+export const jsDMYDateFormatter = (dateString) => {
+
+    if (!dateString) {
+        return dateString
+    }
+    const dateParts = dateString.split(" "); // Split the string by spaces
+
+    const day = dateParts[1]; // Get the day part (e.g., "18")
+    const month = dateParts[2]; // Get the month part (e.g., "Aug")
+    const year = dateParts[3]; // Get the year part (e.g., "2023")
+
+    const formattedDate = `${day} ${month} ${year}`;
+    return formattedDate
+}
+
 function PostDetails() {
 
     const { username, postId } = useParams()
@@ -88,7 +103,7 @@ function PostDetails() {
 
     return (
         <div id="post-details-main-container">
-                <p className="exit-button" onClick={() => history.push(`/${userInfo?.username}/gallery`)}>X</p>
+                <p id="exit-button" onClick={() => history.push(`/${userInfo?.username}/gallery`)}>X</p>
             <div id="post-details-image-container">
                 <img src={postDetails?.photoUrl} />
             </div>
@@ -118,6 +133,7 @@ function PostDetails() {
                                 <p>
                                     {comment.comment}
                                     {comment.userId === user.id ? <OpenModalButton buttonText={"edit"} modalComponent={<EditComment commentText={comment.comment} commentId={comment.id}/>} />: null}
+                                    <p id="comment-date-display">{jsDMYDateFormatter(comment.createdAt)}</p>
                                 </p>
                                 <p>{comment.user.username}</p>
                             </div>
