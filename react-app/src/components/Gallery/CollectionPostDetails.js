@@ -7,6 +7,7 @@ import CreateComment from "../CreateComment";
 import EditComment from "../EditComment";
 import { addToCollectionThunk } from "../../store/store";
 import { deleteFromCollectionThunk } from "../../store/store";
+import { jsDMYDateFormatter } from "../PostDetails";
 
 // Purpose of this file is the same as normal post details, except exiting redirects you to the person's collection page that your currently viewing
 
@@ -109,6 +110,7 @@ function CollectionPostDetails() {
                                 <p>
                                     {comment.comment}
                                     {comment.userId === user.id ? <OpenModalButton buttonText={"edit"} modalComponent={<EditComment commentText={comment.comment} commentId={comment.id}/>} />: null}
+                                    <p id="comment-date-display">{jsDMYDateFormatter(comment.createdAt)}</p>
                                 </p>
                                 <p>{comment.user.username}</p>
                             </div>

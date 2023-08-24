@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: ec6ed46d10b4
+Revision ID: 4e845667b18d
 Revises:
-Create Date: 2023-08-09 19:16:11.678778
+Create Date: 2023-08-24 14:47:02.530220
 
 """
 from alembic import op
@@ -14,7 +14,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 
 # revision identifiers, used by Alembic.
-revision = 'ec6ed46d10b4'
+revision = '4e845667b18d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -79,6 +79,7 @@ def upgrade():
     sa.Column('comment', sa.String(length=255), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=True),
     sa.Column('postId', sa.Integer(), nullable=True),
+    sa.Column('createdAt', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['postId'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['userId'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -98,6 +99,7 @@ def upgrade():
 
     if environment == "production":
         op.execute(f"ALTER TABLE journalphotos SET SCHEMA {SCHEMA};")
+
     # ### end Alembic commands ###
 
 
