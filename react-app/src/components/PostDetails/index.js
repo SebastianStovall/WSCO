@@ -1,6 +1,6 @@
 import { getAllStoreDataThunk } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { deletePostThunk } from "../../store/store";
 import OpenModalButton from "../OpenModalButton";
@@ -31,8 +31,11 @@ function PostDetails() {
     const history = useHistory()
     const dispatch = useDispatch()
 
+    const [activeIndex, setActiveIndex] = useState(null);
+
     let user = useSelector((store) => store.session.user)
     const allStoreData = useSelector((store) => store.store);
+
 
     useEffect(() => {
         if (!allStoreData.posts.length || !allStoreData.user.length || !allStoreData.comments.length || !allStoreData.journals.length) {
@@ -101,11 +104,30 @@ function PostDetails() {
         if(doesUserHaveComment.length > 0) hasComment = true
     }
 
+    // grab all the images for the profile
+    const allPostsForCarousel = allStoreData?.posts.filter((post) => post?.userId === userId )
+
+    // set the active index to the index of the photo being looked at for carousel images
+    const findPostIndex = allPostsForCarousel?.findIndex((post) => post?.id === Number(postId))
+
+    if(activeIndex === null) {
+        setActiveIndex(findPostIndex)
+    }
+
+    const handleNextImg = (offset) => {
+        let newIndex = activeIndex + offset;
+        if (newIndex < 0) newIndex = allPostsForCarousel.length - 1;
+        if (newIndex >= allPostsForCarousel.length) newIndex = 0;
+
+        history.push((`/${userInfo?.username}/gallery/${allPostsForCarousel[newIndex]?.id}`))
+        setActiveIndex(newIndex);
+    };
+
     return (
         <div id="post-details-main-container">
                 <p id="exit-button" onClick={() => history.push(`/${userInfo?.username}/gallery`)}>X</p>
             <div id="post-details-image-container">
-                <img src={postDetails?.photoUrl} />
+                <img src={allPostsForCarousel[activeIndex]?.photoUrl} />
             </div>
             <div id="post-details-crud-buttons">
                 {userId === user.id ? <button onClick={() => history.push(`/${user.username}/edit/${postDetails?.id}`)}>Edit</button> : null}
@@ -113,6 +135,10 @@ function PostDetails() {
                 {userId !== user.id && !hasComment ? <OpenModalButton buttonText={"Comment"} modalComponent={<CreateComment postId={postDetails.id}/>} /> : null}
                 {hasPostInCollection.length === 0 && postDetails?.userId !== user.id ? <button id="add-to-collection-button" onClick={handleAddToCollection}>Add to Collection</button> : ""}
                 {hasPostInCollection.length > 0 && postDetails?.userId !== user.id ? <button id="add-to-collection-button" onClick={handleRemoveFromCollection}>Remove from Collection</button> : ""}
+            </div>
+            <div id="carousel-button-container">
+                <button onClick={() => handleNextImg(-1)} id="previous-photo">&#x21e6;</button>
+                <button onClick={() => handleNextImg(1)} id="next-photo">&#x21e8;</button>
             </div>
             <div id="post-details-post-info-container">
                 <p onClick={() => history.push(`/${userInfo?.username}/gallery`)}>{userInfo?.username}</p>
