@@ -126,11 +126,11 @@ function HomePage() {
             <footer>
                 <div id='footer-container'>
                     <div id='footer-title'>
-                        <h1>WSCO</h1>
+                    <a href="https://github.com/SebastianStovall" target="_blank" rel="noopener noreferrer"> <i class="fab fa-github"></i> <span class="label">GitHub</span> </a>
                     </div>
                         <ul id="footer-list">
                             <li>
-                                @2023 WSCO
+                                <a href="https://www.linkedin.com/in/sebastian-stovall-a17a8a211/" target="_blank" rel="noopener noreferer">  <i class="fab fa-linkedin"></i> <span class="label">LinkedIn</span> </a>
                             </li>
                         </ul>
                     </div>

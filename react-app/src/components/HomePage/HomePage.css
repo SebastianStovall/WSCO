@@ -248,3 +248,18 @@
     color: white;
     list-style: none;
 }
+
+.fa-github {
+    color: white;
+    font-size: 15px;
+}
+
+.fa-linkedin {
+    color: white;
+    font-size: 15px;
+}
+
+.label {
+    color: white;
+    font-size: 15px;
+}
