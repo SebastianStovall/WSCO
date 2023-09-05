@@ -57,36 +57,36 @@ WSCO is a photography app and social platform that offers users the ability to e
 
 ## Endpoints
 
-|  Request                                      | Purpose                                           |
-|  --------                                     | --------                                          |
-|  GET /api/users                               | Returns the information for one user              |
-|  GET /api/users/:id                           |  Returns the information for all users            |
+|  Request                                      | Purpose                                           | Response
+|  --------                                     | --------                                          | --------
+|  GET /api/users                               | Returns the information for one user              | [ { <br> "collection": [{"caption": "#subtle scenery", "id": 12, "photoUrl": "https:fakelink.com",        "userId": 1} ], <br> "comments": [{ "comment": "yo hi there", "id": 17, "postId": 11, "userId": 1 }], <br> "email": "demolition@gmail.com", <br> "firstName": "john", <br> "id": 1, <br> "journals": [ {"description": "", "id": 1, "journalId": 1, "photoUrl": "https://fakelink.com"} ], <br> "posts": [ { "caption": "first light" "id": 1, "photoUrl": "https://fakelink.com", "userId": 1} ], <br> "profileImgBio": "hello world", <br> "profileImgUrl": "https://fakelink.com", <br> username: "demo-lition" <br> } ]
+
 ### Sessions
-|  Request                                      | Purpose                                           |
-|  -------------------------------------------  |  ------------------------------------------------ |
-|  GET /api/auth                                |  Returns the information for the logged in user   |
-|  POST /api/auth/signup                        |  Signs a new user up                              |
-|  POST /api/auth/login                         |   Logs in a user                                  |
-|  DELETE /api/auth                             |   Logs out a user                                 |
+|  Request                                      | Purpose                                           | Response
+|  -------------------------------------------  |  ------------------------------------------------ | ------------------------------------------------
+|  GET /api/auth                                |  Returns the information for the logged in user   | { <br> "collection": [], <br> "comments": [], <br> "email": "demolition@gmail.com", <br> "firstName": "john", <br> "id": 1, <br> "journals": [], <br> "posts": [], <br> "profileImgBio": "hello world", <br> "profileImgUrl": "https://fakelink.com", <br> username: "demo-lition" <br> }
+|  POST /api/auth/signup                        |  Signs a new user up                              | { <br> "collection": [], <br> "comments": [], <br> "email": "demolition@gmail.com", <br> "firstName": "john", <br> "id": 1, <br> "journals": [], <br> "posts": [], <br> "profileImgBio": "hello world", <br> "profileImgUrl": "https://fakelink.com", <br> username: "demo-lition" <br> }
+|  POST /api/auth/login                         |   Logs in a user                                  | { <br> "collection": [], <br> "comments": [], <br> "email": "demolition@gmail.com", <br> "firstName": "john", <br> "id": 1, <br> "journals": [], <br> "posts": [], <br> "profileImgBio": "hello world", <br> "profileImgUrl": "https://fakelink.com", <br> username: "demo-lition" <br> }
+|  DELETE /api/auth                             |   Logs out a user                                 | {'message': 'User logged out'}
 ### Posts
-|  Request                                      | Purpose                                           |
-|  -------------------------------------------  |  ------------------------------------------------ |
-|  GET /api/:username/gallery                   |  View all WSCO post                               |
-|  POST /api/:username/gallery                  | Create new WSCO post                              |
-|  PUT /api/:username/gallery/:postId           | Edit a WSCO post                                  |
-|  DELETE /api/:username/gallery/:postId        | Delete a WSCO post                                |
+|  Request                                      | Purpose                                           | Response
+|  -------------------------------------------  |  ------------------------------------------------ | ------------------------------------------------
+|  GET /api/posts/                              | View all WSCO post                                | { <br> "collection": [], <br> "comments": [], <br> "email": "demolition@gmail.com", <br> "firstName": "john", <br> "id": 1, <br> "journals": [], <br> "posts": [], <br> "profileImgBio": "hello world", <br> "profileImgUrl": "https://fakelink.com", <br> username: "demo-lition" <br> }
+|  POST /api/posts/new                          | Create new WSCO post                              | { <br> 'id': 5, <br> 'userId': 1, <br> 'photoUrl': "https://fakelink.com", <br> 'caption': "" <br> } |
+|  PUT /api/posts/:postId                       | Edit a WSCO post                                  | { <br> 'id': 5, <br> 'userId': 1, <br> 'photoUrl': "https://fakelink.com", <br> 'caption': "hi" <br> } |
+|  DELETE /api/posts/:postId                    | Delete a WSCO post                                | {"successfully deleted", 200}
 ### Journals
-|  Request                                      | Purpose                                           |
-|  -------------------------------------------  |  ------------------------------------------------ |
-|  GET /api/:username/journals                  |    View all of a user's journals                  |
-|  POST /api/:username/journals                 |   Create a new journal for a user                 |
-|  PUT /api/:username/journals/:journalTitle    |  Edit a user's journal                            |
-|  DELETE /api/:username/journals/:journalTitle |  Delete a user's journal                          |
+|  Request                                      | Purpose                                           | Response
+|  -------------------------------------------  |  ------------------------------------------------ | ------------------------------------------------
+|  GET /api/journals/journals                   |    View all of a user's journals                  | { <br> "collection": [], <br> "comments": [], <br> "email": "demolition@gmail.com", <br> "firstName": "john", <br> "id": 1, <br> "journals": [], <br> "posts": [], <br> "profileImgBio": "hello world", <br> "profileImgUrl": "https://fakelink.com", <br> username: "demo-lition" <br> }
+|  POST /api/journals/new                       |   Create a new journal for a user                 | { <br> 'id': 5, <br> 'title': "test journal", <br> 'description': "", <br> 'userId': 1, <br> 'photos': [] <br> }
+|  PUT /api/journals/:journalId                 |  Edit a user's journal                            | { <br> 'id': 5, <br> 'title': "test journal", <br> 'description': "", <br> 'userId': 1, <br> 'photos': [] <br> }
+|  DELETE /api/journals/:journalId              |  Delete a user's journal                          | {"successfully deleted", 200}
 ### Collections
-|  Request                                      | Purpose                                           |
-|  -------------------------------------------  |  ------------------------------------------------ |
-|  POST /api/collections/add                    |  Adds a post to a user's collection page          |
-|  DELETE /api/collections/:collectionId        |  Delete's a post to a user's collection page      |
+|  Request                                      | Purpose                                           | Response
+|  -------------------------------------------  |  ------------------------------------------------ | ------------------------------------------------
+|  POST /api/collections/add                    |  Adds a post to a user's collection page          | {"message": "Added to collection successfully"}, 200
+|  DELETE /api/collections/:collectionId        |  Delete's a post to a user's collection page      | {"message": "Removed from collection successfully"}, 200
 
 
 ## Future Implementation Goals
