@@ -27,7 +27,6 @@ function JournalDetails() {
 
     // Access the journal's photos
     const journalPhotos = journal.photos
-    console.log("THESE ARE THE JOURNAL PHOTOS --------> ", journalPhotos)
 
     return(
         <div id="journal-details-main-component">
