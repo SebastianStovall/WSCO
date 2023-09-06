@@ -25,7 +25,6 @@ function SignupFormPage() {
     const data = await dispatch(signUp(username, email, password));
     if (data) { // returns null if fine, so will not excecute
       setErrors(data)
-      console.log(errors)
     } else {
       await dispatch(getAllStoreDataThunk())
     }

@@ -31,7 +31,6 @@ function EditPost() {
     const handleEditPost = async(e) => {
         e.preventDefault()
 
-        console.log("THIS IS THE IMAGE", image)
         const errors = {}
         if(newPhoto) {
             if(image === null) {
