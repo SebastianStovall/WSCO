@@ -5,6 +5,26 @@ WSCO is a photography app and social platform that offers users the ability to e
 - Check out [WSCO](https://wsco.onrender.com/) here
 - Connect With Me - [LinkedIn](https://www.linkedin.com/in/sebastian-stovall-a17a8a211/)
 
+## Getting Started
+
+Clone this repository: https://github.com/SebastianStovall/WSCO.git
+
+Create a .env file and insert the following environmental variables:
+
+SECRET_KEY=xxxx DATABASE_URL=xxxx SCHEMA=xxxx
+
+Create a .flaskenv file and insert the following environmental variables:
+FLASK_APP=app
+
+From the root directory, and run the following command in the terminal:
+pipenv install -r requirements.txt
+
+From the root directory, run the following commands in the terminal:
+pipenv shell flask db init flask db migrate flask db upgrade flask db seed all flask run
+
+navigate into the /react-app directory, and run the following command in the terminal:
+npm install npm start
+
 [MVP FEATURE LIST](https://github.com/SebastianStovall/WSCO/wiki/MVP-Features) | [Database Schema](https://github.com/SebastianStovall/WSCO/wiki/WSCO-Database-Schema) | [User Stories](https://github.com/SebastianStovall/WSCO/wiki/User-Stories-Documentation) | [Wire Frames](https://github.com/SebastianStovall/WSCO/wiki/WSCO-WireFrame)
 
 ## Technologies Used
